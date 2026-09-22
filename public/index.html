@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Store · Gestor</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <aside>
+      <div class="brand"><span class="brand-mark">FS</span><span>Food Store<small>GESTOR DE DATOS</small></span></div>
+      <nav>
+        <button class="nav active" data-view="dashboard">Resumen</button>
+        <button class="nav" data-view="products">Productos</button>
+        <button class="nav" data-view="categories">Categorías</button>
+        <button class="nav" data-view="orders">Pedidos</button>
+      </nav>
+      <div class="status"><i></i><span id="connection">Conectando a Railway…</span></div>
+    </aside>
+    <main>
+      <header><div><p id="eyebrow">PANEL GENERAL</p><h1 id="title">Resumen</h1></div><button class="ghost" id="refresh">↻ Actualizar</button></header>
+      <section id="dashboard" class="view active">
+        <div class="hero"><div><p>BASE DE DATOS II</p><h2>El negocio, en una sola vista.</h2><span>Datos conectados a PostgreSQL en Railway.</span></div><div class="orb"></div></div>
+        <div class="metrics" id="metrics"></div>
+        <div class="panel"><div class="panel-title"><div><p>ÚLTIMOS PEDIDOS</p><h3>Actividad reciente</h3></div><button class="text-button" data-go="orders">Ver todos</button></div><div id="recent-orders"></div></div>
+      </section>
+      <section id="products" class="view">
+        <div class="toolbar"><input id="product-search" placeholder="Buscar producto…" /><select id="product-category"><option value="">Todas las categorías</option></select><label class="switch"><input type="checkbox" id="show-inactive" /> Ver inactivos</label><button class="primary" id="new-product">+ Nuevo producto</button></div>
+        <div class="panel table-panel"><table><thead><tr><th>Producto</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Estado</th><th></th></tr></thead><tbody id="products-body"></tbody></table></div>
+      </section>
+      <section id="categories" class="view"><div class="section-line"><div><p>ORGANIZACIÓN DEL CATÁLOGO</p><h2>Categorías</h2></div><button class="primary" id="new-category">+ Nueva categoría</button></div><div id="category-grid" class="card-grid"></div></section>
+      <section id="orders" class="view"><div class="section-line"><div><p>VENTAS REGISTRADAS</p><h2>Últimos pedidos</h2></div><span class="muted">Hasta 100 registros</span></div><div class="panel table-panel"><table><thead><tr><th>Pedido</th><th>Fecha</th><th>Cliente</th><th>Pago</th><th>Unidades</th><th>Total</th></tr></thead><tbody id="orders-body"></tbody></table></div></section>
+    </main>
+    <dialog id="modal"><form method="dialog" id="modal-form"><button class="close" value="cancel">×</button><p id="modal-kicker">GESTIÓN</p><h2 id="modal-title"></h2><div id="modal-fields"></div><div class="modal-actions"><button value="cancel" class="ghost">Cancelar</button><button class="primary" id="save" value="default">Guardar</button></div></form></dialog>
+    <div id="toast"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
