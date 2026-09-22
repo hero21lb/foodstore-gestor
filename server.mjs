@@ -159,4 +159,5 @@ app.use((err, _req, res, _next) => {
   res.status(err.status || 500).json({ error: err.message || "Ocurrió un error inesperado" });
 });
 
-app.listen(process.env.PORT || 3000, () => console.log("Food Store gestor iniciado"));
+const port = Number(process.env.PORT || 3000);
+app.listen(port, "0.0.0.0", () => console.log(`Food Store gestor iniciado en puerto ${port}`));
