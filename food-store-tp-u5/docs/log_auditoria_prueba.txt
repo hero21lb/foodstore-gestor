@@ -1,0 +1,8 @@
+EVIDENCIA DE REFERENCIA - completar con el fragmento real de pg_log luego de ejecutar auditoria_test.sql.
+
+2026-10-06 00:00:00.000 -0300 [00000] user=app_web,db=foodstore,app=psql,client=127.0.0.1 LOG:  statement: SELECT id, nombre, apellido FROM cliente ORDER BY id LIMIT 1;
+2026-10-06 00:00:00.100 -0300 [00000] user=app_web,db=foodstore,app=psql,client=127.0.0.1 LOG:  statement: INSERT INTO categoria ...;
+2026-10-06 00:00:00.110 -0300 [00000] user=app_web,db=foodstore,app=psql,client=127.0.0.1 LOG:  statement: UPDATE producto SET stock = stock ...;
+2026-10-06 00:00:00.120 -0300 [00000] user=app_web,db=foodstore,app=psql,client=127.0.0.1 LOG:  disconnection: session time: 0:00:01
+
+Las fechas, PID y resultados anteriores son un formato anonimizado de referencia, no sustituyen la captura de la instancia local.

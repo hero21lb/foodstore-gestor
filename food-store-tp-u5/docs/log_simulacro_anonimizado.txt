@@ -1,0 +1,10 @@
+EVIDENCIA ANONIMIZADA DE REFERENCIA - completar con el log real del simulacro.
+
+2026-10-06 00:01:00.000 -0300 [00000] user=app_web,db=foodstore,client=127.0.0.1 LOG:  statement: SELECT clock_timestamp(), 'SIMULACRO_INICIO';
+2026-10-06 00:01:00.010 -0300 [00000] user=app_web,db=foodstore,client=127.0.0.1 NOTICE: LOGIN_FALLIDO intento=1
+2026-10-06 00:01:00.020 -0300 [00000] user=app_web,db=foodstore,client=127.0.0.1 NOTICE: LOGIN_FALLIDO intento=2
+2026-10-06 00:01:00.030 -0300 [00000] user=app_web,db=foodstore,client=127.0.0.1 NOTICE: LOGIN_FALLIDO intento=3
+2026-10-06 00:01:00.040 -0300 [00000] user=app_web,db=foodstore,client=127.0.0.1 LOG:  statement: SELECT count(*), min(id), max(id) FROM cliente;
+2026-10-06 00:01:00.050 -0300 [00000] user=app_web,db=foodstore,client=127.0.0.1 ERROR:  permission denied to grant role "admin_datos"
+
+Se reemplazaron identificadores y datos potencialmente personales por valores sintéticos.
