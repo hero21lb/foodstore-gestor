@@ -1,19 +1,30 @@
-# Bitácora de uso de IA - Unidad 5
+# Bitacora real de asistencia - U5
 
-> Esta bitácora registra el trabajo asistido realizado en el repositorio. Las evidencias de ejecución contra PostgreSQL deben completarse con los resultados de la instancia local.
+Revision del 20/10/2026. Asistente efectivo: Codex. Las afirmaciones anteriores
+sobre revision humana y respuestas de IA no capturadas fueron sustituidas por
+hechos verificables. No se atribuye a Kiro/OpenCode lo hecho con Codex.
 
-| Prompt enviado a la IA | Respuesta relevante recibida (resumida) | Validación o corrección humana aplicada |
+| Prompt enviado a la IA | Respuesta relevante recibida (resumida) | Validacion o correccion humana aplicada |
 |---|---|---|
-| Revisar el esquema de Food Store y diseñar roles de mínimo privilegio. | Propuso separar roles de grupo de las identidades de login y negar privilegios a `PUBLIC`. | Se verificó que el esquema real usa `cliente` y no `usuario`; se ajustaron los permisos a las tablas existentes. |
-| Auditar `roles.sql` y sugerir mejoras. | Sugirió simplificar con `GRANT ALL` para evitar errores de la aplicación. | Se rechazó la propuesta por ser más amplia de lo necesario; se mantuvieron privilegios puntuales y un permiso de columna. Este es el error inseguro más significativo detectado. |
-| Diseñar una prueba de auditoría. | Recomendó `log_connections`, `log_disconnections`, `log_statement=mod` y un prefijo con usuario/base/cliente. | Se conservó la configuración y se aclaró que el log nativo no prueba detalle fila por fila. |
-| Reconstruir el incidente desde un log anonimizado, sin contexto adicional. | La reconstrucción debe limitarse a eventos observables y proponer contención como hipótesis. | Se documentó que fechas, causa humana y compromiso de credenciales no pueden afirmarse sin evidencia. |
-| Proponer una consulta agregada equivalente sobre datos anonimizados. | Comparar conteos agrupados por rol y mes de alta. | Como U1-U4 no conserva una tabla `usuario`, se usó `cliente` como fuente disponible y se dejó explícita la adaptación. |
+| Usuario: revisar consignas U5/U6 y resolver con Railway. Parte A: reconstruir identidades y privilegios. | Codex preparo roles y funciones SECURITY DEFINER con propietario NOLOGIN y path fijo. | Pruebas automaticas efectivas en Railway; revision humana pendiente. El usuario instalo pgcrypto en foodstore. |
+| Parte B: activar/verificar auditoria y capturar eventos. | Codex verifico la configuracion ya aplicada por el usuario y ejecuto lectura/INSERT/UPDATE con ROLLBACK y login motor fallido. | Logs reales del servidor. Se detecto exposicion de parametros sinteticos por RAISE LOG y se corrigio la configuracion de la sesion sensible. Revision humana pendiente. |
+| Parte C: ejecutar fallos, exito, lectura masiva e intento de escalamiento. | Codex orquesto 3 fallos, 1 exito, 18 filas leidas y GRANT rechazado. | SQLSTATE 42501 y ausencia de membresia verificados automaticamente. Contraste escrito en informe_incidente.md; decision humana pendiente. |
+| Parte D: comparar usuarios por rol/mes con tabla sintetizada. | Codex preparo ambas consultas con el mismo mes UTC y EXCEPT bidireccional. | Cero diferencias observado. No se confundieron meses historicos de cliente con fecha actual. Revision humana pendiente. |
+| OpenCode: auditar SOLO el SQL adjunto, sin herramientas ni cambios; evaluar minimo privilegio/SECURITY DEFINER/defaults/GRANT ALL. | Error HTTP 400: esquema invalido de herramientas MCP. | Respuesta completa en docs/opencode_auditoria.jsonl. No se acepto como auditoria ni se invento una recomendacion insegura. |
 
-## Validación final
+## Error significativo real
+El borrador daba CREATEDB/CREATEROLE a admin_datos y lectura automatica de tablas
+futuras a reportes/aplicacion. Se corrigio a privilegios puntuales y objetos futuros
+cerrados, para evitar exponer futuras credenciales. Ademas se verifico que un
+REVOKE de EXECUTE por esquema no elimina el default global publico: se uso REVOKE
+global y se probo creando una funcion temporal dentro de una transaccion revertida.
+El defecto de parametros en RAISE LOG se corrigio tras observar logs reales, no
+suponiendo que log_statement=none bastaba. Son correcciones de Codex pendientes de
+validacion humana; no satisfacen por si solas el caso obligatorio de una propuesta
+insegura efectivamente emitida por OpenCode.
 
-La ejecución debe hacerse exclusivamente sobre la base de desarrollo. Antes de entregar se deben sustituir las evidencias de referencia por logs y resultados reales, anonimizados, y verificar que el intento de escalamiento falla.
-
-## Historial Git
-
-El trabajo se organizó por partes en archivos separados. Si la entrega requiere commits visibles por parte, se recomienda confirmar en GitHub Desktop los commits `Parte A`, `Parte B`, `Parte C`, `Parte D` y `Parte E` antes de publicar.
+## Pendientes de la consigna
+Kiro no esta disponible: requirements/design son un plan redactado con Codex.
+Faltan auditoria/reconstruccion efectivas de OpenCode, el contraste del estudiante,
+y su revision humana. No se inventan esas evidencias. Git conserva avance por partes;
+la reconstruccion del borrador inicial se mantiene en su historial.
