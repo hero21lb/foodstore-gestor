@@ -1,0 +1,76 @@
+[
+  {
+    "utc": "2026-10-20T21:02:52.695400+00:00",
+    "evento": "autenticacion_fallida",
+    "intento": 1
+  },
+  {
+    "utc": "2026-10-20T21:02:52.979288+00:00",
+    "evento": "autenticacion_fallida",
+    "intento": 2
+  },
+  {
+    "utc": "2026-10-20T21:02:53.821079+00:00",
+    "evento": "autenticacion_fallida",
+    "intento": 3
+  },
+  {
+    "utc": "2026-10-20T21:02:54.100444+00:00",
+    "evento": "autenticacion_exitosa"
+  },
+  {
+    "utc": "2026-10-20T21:02:55.047722+00:00",
+    "evento": "lectura_masiva_usuario",
+    "filas": 18
+  },
+  {
+    "utc": "2026-10-20T21:02:55.823635+00:00",
+    "evento": "escalamiento_rechazado",
+    "sqlstate": "42501"
+  },
+  {
+    "utc": "2026-10-20T21:02:56.048242+00:00",
+    "evento": "hash_denegado",
+    "sqlstate": "42501"
+  },
+  {
+    "utc": "2026-10-20T21:02:56.281439+00:00",
+    "evento": "delete_denegado",
+    "sqlstate": "42501"
+  },
+  {
+    "utc": "2026-10-20T21:02:56.508131+00:00",
+    "evento": "reset_denegado",
+    "sqlstate": "42501"
+  },
+  {
+    "utc": "2026-10-20T21:02:56.733759+00:00",
+    "evento": "lectura_producto_permitida"
+  },
+  {
+    "utc": "2026-10-20T21:02:58.062622+00:00",
+    "evento": "soporte_columnas_permitidas"
+  },
+  {
+    "utc": "2026-10-20T21:02:58.289317+00:00",
+    "evento": "soporte_mail_denegado",
+    "sqlstate": "42501"
+  },
+  {
+    "utc": "2026-10-20T21:02:59.634491+00:00",
+    "evento": "tabla_futura_cerrada"
+  },
+  {
+    "utc": "2026-10-20T21:03:00.115074+00:00",
+    "evento": "funcion_futura_cerrada"
+  },
+  {
+    "utc": "2026-10-20T21:03:06.708592+00:00",
+    "evento": "conexion_motor_rechazada"
+  },
+  {
+    "utc": "2026-10-20T21:03:12.988448+00:00",
+    "evento": "equivalencia_verificada",
+    "diferencias": 0
+  }
+]

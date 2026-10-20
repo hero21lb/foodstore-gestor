@@ -1,0 +1,21 @@
+{
+  "tablas_negocio_foodstore_sin_cambios": true,
+  "railway_sin_cambios": true,
+  "update_app_web_rollback": true,
+  "roles": [
+    [
+      "app_web",
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      "admin_datos",
+      false,
+      false,
+      false,
+      false
+    ]
+  ]
+}

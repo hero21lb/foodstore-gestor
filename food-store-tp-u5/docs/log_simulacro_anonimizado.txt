@@ -1,10 +1,45 @@
-EVIDENCIA ANONIMIZADA DE REFERENCIA - completar con el log real del simulacro.
-
-2026-10-06 00:01:00.000 -0300 [00000] user=app_web,db=foodstore,client=127.0.0.1 LOG:  statement: SELECT clock_timestamp(), 'SIMULACRO_INICIO';
-2026-10-06 00:01:00.010 -0300 [00000] user=app_web,db=foodstore,client=127.0.0.1 NOTICE: LOGIN_FALLIDO intento=1
-2026-10-06 00:01:00.020 -0300 [00000] user=app_web,db=foodstore,client=127.0.0.1 NOTICE: LOGIN_FALLIDO intento=2
-2026-10-06 00:01:00.030 -0300 [00000] user=app_web,db=foodstore,client=127.0.0.1 NOTICE: LOGIN_FALLIDO intento=3
-2026-10-06 00:01:00.040 -0300 [00000] user=app_web,db=foodstore,client=127.0.0.1 LOG:  statement: SELECT count(*), min(id), max(id) FROM cliente;
-2026-10-06 00:01:00.050 -0300 [00000] user=app_web,db=foodstore,client=127.0.0.1 ERROR:  permission denied to grant role "admin_datos"
-
-Se reemplazaron identificadores y datos potencialmente personales por valores sintéticos.
+2026-10-20T21:02:51.018067375Z 2026-10-20 21:02:50.848 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  U5_RESET actor_motor=admin_datos
+2026-10-20T21:02:51.018080495Z 2026-10-20 21:02:50.848 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA CONTEXT:  PL/pgSQL function public.fn_resetear_password([PARAMETROS_REDACTADOS]) line 6 at RAISE
+2026-10-20T21:02:52.977302312Z 2026-10-20 21:02:52.764 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  U5_AUTH resultado=fallido actor_motor=app_web
+2026-10-20T21:02:52.977305722Z 2026-10-20 21:02:52.764 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA CONTEXT:  PL/pgSQL function public.fn_autenticar([PARAMETROS_REDACTADOS]) line 6 at RAISE
+2026-10-20T21:02:53.063636296Z 2026-10-20 21:02:53.061 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  U5_AUTH resultado=fallido actor_motor=app_web
+2026-10-20T21:02:53.063640866Z 2026-10-20 21:02:53.061 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA CONTEXT:  PL/pgSQL function public.fn_autenticar([PARAMETROS_REDACTADOS]) line 6 at RAISE
+2026-10-20T21:02:53.338593703Z 2026-10-20 21:02:53.336 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  U5_AUTH resultado=fallido actor_motor=app_web
+2026-10-20T21:02:53.338606763Z 2026-10-20 21:02:53.336 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA CONTEXT:  PL/pgSQL function public.fn_autenticar([PARAMETROS_REDACTADOS]) line 6 at RAISE
+2026-10-20T21:02:54.179168756Z 2026-10-20 21:02:54.174 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  U5_AUTH resultado=exitoso actor_motor=app_web
+2026-10-20T21:02:54.179187096Z 2026-10-20 21:02:54.174 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA CONTEXT:  PL/pgSQL function public.fn_autenticar([PARAMETROS_REDACTADOS]) line 6 at RAISE
+2026-10-20T21:02:55.056313263Z 2026-10-20 21:02:54.874 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: SET SESSION AUTHORIZATION app_web
+2026-10-20T21:02:55.123824840Z 2026-10-20 21:02:55.108 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: SELECT id,nombre,mail,rol,fecha_alta,activo FROM usuario
+2026-10-20T21:02:55.348424870Z 2026-10-20 21:02:55.346 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: BEGIN
+2026-10-20T21:02:55.936843067Z 2026-10-20 21:02:55.663 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: GRANT admin_datos TO app_web
+2026-10-20T21:02:55.936846727Z 2026-10-20 21:02:55.664 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA ERROR:  permission denied to grant role "admin_datos"
+2026-10-20T21:02:55.936850627Z 2026-10-20 21:02:55.664 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA DETAIL:  Only roles with the ADMIN option on role "admin_datos" may grant this role.
+2026-10-20T21:02:55.936855017Z 2026-10-20 21:02:55.893 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: ROLLBACK
+2026-10-20T21:02:56.126131793Z 2026-10-20 21:02:56.124 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: SELECT password_hash FROM usuario
+2026-10-20T21:02:56.126136893Z 2026-10-20 21:02:56.124 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA ERROR:  permission denied for table usuario
+2026-10-20T21:02:56.355314920Z 2026-10-20 21:02:56.348 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: DELETE FROM pedido WHERE false
+2026-10-20T21:02:56.355330240Z 2026-10-20 21:02:56.348 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA ERROR:  permission denied for table pedido
+2026-10-20T21:02:56.584908805Z 2026-10-20 21:02:56.582 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: SELECT fn_resetear_password([PARAMETROS_REDACTADOS])
+2026-10-20T21:02:56.584913355Z 2026-10-20 21:02:56.582 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA ERROR:  permission denied for function fn_resetear_password
+2026-10-20T21:02:57.038862241Z 2026-10-20 21:02:56.809 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: SELECT count(*) FROM producto
+2026-10-20T21:02:57.046230653Z 2026-10-20 21:02:57.041 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: RESET SESSION AUTHORIZATION
+2026-10-20T21:02:57.319871581Z 2026-10-20 21:02:57.281 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: SET SESSION AUTHORIZATION rol_soporte
+2026-10-20T21:02:58.114490998Z 2026-10-20 21:02:58.112 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: SELECT id,nombre,apellido FROM cliente LIMIT 1
+2026-10-20T21:02:58.371638527Z 2026-10-20 21:02:58.366 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: SELECT mail FROM cliente LIMIT 1
+2026-10-20T21:02:58.371645087Z 2026-10-20 21:02:58.366 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA ERROR:  permission denied for table cliente
+2026-10-20T21:02:58.602326061Z 2026-10-20 21:02:58.593 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: RESET SESSION AUTHORIZATION
+2026-10-20T21:02:59.059076811Z 2026-10-20 21:02:58.819 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: BEGIN
+2026-10-20T21:02:59.427003049Z 2026-10-20 21:02:59.425 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: CREATE TABLE public.u5_default_test(id integer)
+2026-10-20T21:03:00.018082911Z 2026-10-20 21:02:59.706 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: SELECT has_table_privilege('app_web','public.u5_default_test','SELECT')
+2026-10-20T21:03:00.018087521Z 2026-10-20 21:02:59.965 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: CREATE FUNCTION public.u5_default_function() RETURNS int LANGUAGE sql AS $$SELECT 1$$
+2026-10-20T21:03:00.206484125Z 2026-10-20 21:03:00.196 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: SELECT has_function_privilege('app_web','public.u5_default_function()','EXECUTE')
+2026-10-20T21:03:00.417534419Z 2026-10-20 21:03:00.414 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  statement: ROLLBACK
+2026-10-20T21:03:00.651493333Z 2026-10-20 21:03:00.649 UTC [305] user=postgres,db=foodstore,app=foodstore_u5_simulacro,client=IP_SINTETICA LOG:  disconnection: session time: 0:00:14.721 user=postgres database=foodstore host=IP_SINTETICA port=45972
+2026-10-20T21:03:03.048275218Z 2026-10-20 21:03:03.045 UTC [308] user=postgres,db=foodstore,app=foodstore_u5_auditoria,client=IP_SINTETICA LOG:  statement: SELECT count(*) clientes FROM cliente;
+2026-10-20T21:03:04.007896812Z 2026-10-20 21:03:03.711 UTC [308] user=postgres,db=foodstore,app=foodstore_u5_auditoria,client=IP_SINTETICA LOG:  statement: BEGIN;
+2026-10-20T21:03:04.007903352Z 2026-10-20 21:03:03.961 UTC [308] user=postgres,db=foodstore,app=foodstore_u5_auditoria,client=IP_SINTETICA LOG:  statement: INSERT INTO categoria(nombre,descripcion) VALUES ('U5_AUDITORIA_SINTETICA','Prueba con rollback');
+2026-10-20T21:03:04.226059881Z 2026-10-20 21:03:04.225 UTC [308] user=postgres,db=foodstore,app=foodstore_u5_auditoria,client=IP_SINTETICA LOG:  statement: UPDATE producto SET stock=stock WHERE id=(SELECT min(id) FROM producto);
+2026-10-20T21:03:04.474747469Z 2026-10-20 21:03:04.473 UTC [308] user=postgres,db=foodstore,app=foodstore_u5_auditoria,client=IP_SINTETICA LOG:  statement: ROLLBACK;
+2026-10-20T21:03:05.015225535Z 2026-10-20 21:03:04.729 UTC [308] user=postgres,db=foodstore,app=foodstore_u5_auditoria,client=IP_SINTETICA LOG:  disconnection: session time: 0:00:03.791 user=postgres database=foodstore host=IP_SINTETICA port=57662
+2026-10-20T21:03:06.951632823Z 2026-10-20 21:03:06.766 UTC [310] user=u5_login_inexistente,db=foodstore,app=[unknown],client=IP_SINTETICA FATAL:  password authentication failed for user "u5_login_inexistente"
+2026-10-20T21:03:06.951638033Z 2026-10-20 21:03:06.766 UTC [310] user=u5_login_inexistente,db=foodstore,app=[unknown],client=IP_SINTETICA DETAIL:  Role "u5_login_inexistente" does not exist.
