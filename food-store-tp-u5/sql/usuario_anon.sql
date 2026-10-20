@@ -1,36 +1,11 @@
--- Food Store - Unidad 5 / Parte D
--- Anonimización determinista: conserva agrupamientos y conteos, no valores
--- identificables. No copia mail, celular ni nombres reales.
-
-CREATE TABLE IF NOT EXISTS usuario_anon (
-  id BIGINT PRIMARY KEY,
-  rol TEXT NOT NULL,
-  mes_alta DATE NOT NULL,
-  nombre_sintetico TEXT NOT NULL,
-  mail_sintetico TEXT NOT NULL UNIQUE
-);
-
+-- Parte D. No se inventa un mes unico para todos los clientes.
+BEGIN;
+CREATE TABLE IF NOT EXISTS usuario_anon(id bigint PRIMARY KEY,rol text NOT NULL,mes_alta date NOT NULL,nombre_sintetico text NOT NULL,mail_sintetico text UNIQUE NOT NULL);
 TRUNCATE usuario_anon;
-
--- El esquema de U1-U4 no posee usuario. Se modela el equivalente disponible
--- (cliente) para que el ejercicio pueda ejecutarse sin inventar columnas.
-INSERT INTO usuario_anon (id, rol, mes_alta, nombre_sintetico, mail_sintetico)
-SELECT id,
-       'cliente' AS rol,
-       date_trunc('month', current_date)::date AS mes_alta,
-       'Usuario_' || lpad(row_number() OVER (ORDER BY id)::text, 6, '0'),
-       'anon_' || id || '@example.invalid'
-FROM cliente;
-
--- Consulta agregada sobre la tabla anonimizada.
-SELECT rol, mes_alta, count(*) AS cantidad
-FROM usuario_anon
-GROUP BY rol, mes_alta
-ORDER BY rol, mes_alta;
-
--- Consulta equivalente sobre la fuente real, sin proyectar PII.
-SELECT 'cliente' AS rol, date_trunc('month', current_date)::date AS mes_alta,
-       count(*) AS cantidad
-FROM cliente
-GROUP BY 1, 2
-ORDER BY 1, 2;
+INSERT INTO usuario_anon SELECT id,rol,date_trunc('month',fecha_alta AT TIME ZONE 'UTC')::date,'Usuario_'||lpad(id::text,6,'0'),'anon_'||id||'@example.invalid' FROM usuario;
+COMMIT;
+SELECT 'usuario' fuente,rol,date_trunc('month',fecha_alta AT TIME ZONE 'UTC')::date mes_alta,count(*) cantidad FROM usuario GROUP BY 2,3
+UNION ALL SELECT 'usuario_anon',rol,mes_alta,count(*) FROM usuario_anon GROUP BY 2,3 ORDER BY 2,3,1;
+WITH a AS(SELECT rol,date_trunc('month',fecha_alta AT TIME ZONE 'UTC')::date mes_alta,count(*) cantidad FROM usuario GROUP BY 1,2),b AS(SELECT rol,mes_alta,count(*) cantidad FROM usuario_anon GROUP BY 1,2)
+SELECT count(*) diferencias FROM((SELECT * FROM a EXCEPT SELECT * FROM b) UNION ALL (SELECT * FROM b EXCEPT SELECT * FROM a)) d;
+-- Tecnica determinista con id estable: seudonimizacion, no anonimato irreversible.
