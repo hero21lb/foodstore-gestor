@@ -1,8 +1,8 @@
-EVIDENCIA DE REFERENCIA - completar con el fragmento real de pg_log luego de ejecutar auditoria_test.sql.
-
-2026-10-06 00:00:00.000 -0300 [00000] user=app_web,db=foodstore,app=psql,client=127.0.0.1 LOG:  statement: SELECT id, nombre, apellido FROM cliente ORDER BY id LIMIT 1;
-2026-10-06 00:00:00.100 -0300 [00000] user=app_web,db=foodstore,app=psql,client=127.0.0.1 LOG:  statement: INSERT INTO categoria ...;
-2026-10-06 00:00:00.110 -0300 [00000] user=app_web,db=foodstore,app=psql,client=127.0.0.1 LOG:  statement: UPDATE producto SET stock = stock ...;
-2026-10-06 00:00:00.120 -0300 [00000] user=app_web,db=foodstore,app=psql,client=127.0.0.1 LOG:  disconnection: session time: 0:00:01
-
-Las fechas, PID y resultados anteriores son un formato anonimizado de referencia, no sustituyen la captura de la instancia local.
+2026-10-20T21:03:03.048275218Z 2026-10-20 21:03:03.045 UTC [308] user=postgres,db=foodstore,app=foodstore_u5_auditoria,client=IP_SINTETICA LOG:  statement: SELECT count(*) clientes FROM cliente;
+2026-10-20T21:03:04.007896812Z 2026-10-20 21:03:03.711 UTC [308] user=postgres,db=foodstore,app=foodstore_u5_auditoria,client=IP_SINTETICA LOG:  statement: BEGIN;
+2026-10-20T21:03:04.007903352Z 2026-10-20 21:03:03.961 UTC [308] user=postgres,db=foodstore,app=foodstore_u5_auditoria,client=IP_SINTETICA LOG:  statement: INSERT INTO categoria(nombre,descripcion) VALUES ('U5_AUDITORIA_SINTETICA','Prueba con rollback');
+2026-10-20T21:03:04.226059881Z 2026-10-20 21:03:04.225 UTC [308] user=postgres,db=foodstore,app=foodstore_u5_auditoria,client=IP_SINTETICA LOG:  statement: UPDATE producto SET stock=stock WHERE id=(SELECT min(id) FROM producto);
+2026-10-20T21:03:04.474747469Z 2026-10-20 21:03:04.473 UTC [308] user=postgres,db=foodstore,app=foodstore_u5_auditoria,client=IP_SINTETICA LOG:  statement: ROLLBACK;
+2026-10-20T21:03:05.015225535Z 2026-10-20 21:03:04.729 UTC [308] user=postgres,db=foodstore,app=foodstore_u5_auditoria,client=IP_SINTETICA LOG:  disconnection: session time: 0:00:03.791 user=postgres database=foodstore host=IP_SINTETICA port=57662
+2026-10-20T21:03:06.951632823Z 2026-10-20 21:03:06.766 UTC [310] user=u5_login_inexistente,db=foodstore,app=[unknown],client=IP_SINTETICA FATAL:  password authentication failed for user "u5_login_inexistente"
+2026-10-20T21:03:06.951638033Z 2026-10-20 21:03:06.766 UTC [310] user=u5_login_inexistente,db=foodstore,app=[unknown],client=IP_SINTETICA DETAIL:  Role "u5_login_inexistente" does not exist.

@@ -1,0 +1,19 @@
+        name        |                 setting                 | pending_restart 
+--------------------+-----------------------------------------+-----------------
+ log_connections    | on                                      | f
+ log_disconnections | on                                      | f
+ log_line_prefix    | %m [%p] user=%u,db=%d,app=%a,client=%h  | f
+ log_statement      | mod                                     | f
+(4 rows)
+
+SET
+SET
+ clientes 
+----------
+     5000
+(1 row)
+
+BEGIN
+INSERT 0 1
+UPDATE 1
+ROLLBACK
