@@ -1,23 +1,20 @@
-# Especificación de requisitos - roles Food Store
+# Requisitos de roles Food Store - revision 20/10/2026
 
-## Alcance
+Plan previo: redactado con Codex en formato requirements/design. No se afirma
+que Kiro lo haya generado; esa herramienta no esta disponible en esta sesion.
 
-La política aplica a la base de desarrollo de Food Store en PostgreSQL 16 o superior. Se adopta mínimo privilegio y se evita almacenar contraseñas en Git.
+| Rol | Permisos necesarios y justificacion |
+|---|---|
+| rol_app_lectura | SELECT de catalogo/ventas y columnas publicas de usuario para la aplicacion |
+| rol_app_escritura | INSERT/UPDATE de producto, pedido y detalle; lectura de referencias; sin DELETE |
+| rol_soporte | Diagnostico de stock/ventas y solo id/nombre/apellido de cliente; sin correo/celular |
+| rol_reportes | Lectura de catalogo/ventas y id/rol/fecha_alta de usuario; sin PII ni hashes |
+| app_web | Hereda lectura/escritura; LOGIN sin facultades administrativas |
+| admin_datos | Soporte/reportes, actualizacion de estado/rol y reseteo controlado de passwords |
+| foodstore_auth_owner | NOLOGIN propietario de funciones de autenticacion; solo acceso a usuario |
 
-## Roles
-
-| Rol | Necesidad | Permiso justificado |
-|---|---|---|
-| `rol_app_lectura` | Consultar el catálogo y el estado de pedidos | `SELECT` sobre las tablas operativas; no modifica datos ni administra roles. |
-| `rol_app_escritura` | Registrar pedidos y actualizar productos | `SELECT` para validar referencias y `INSERT/UPDATE` solo sobre las operaciones de negocio necesarias. |
-| `rol_soporte` | Diagnosticar la aplicación | Consulta auditoría y datos mínimos de cliente; no accede a correo/celular ni modifica tablas. |
-| `rol_reportes` | Ejecutar reportes | `SELECT` sobre tablas operativas; no escribe ni otorga privilegios. |
-| `app_web` | Identidad de conexión de la aplicación | Hereda lectura/escritura, sin `CREATEROLE`, `CREATEDB` ni superusuario. |
-| `admin_datos` | Administrar datos y delegaciones controladas | Identidad administrativa separada de la aplicación; las credenciales se gestionan fuera del repositorio. |
-
-## Criterios de aceptación
-
-1. `PUBLIC` no conserva privilegios sobre el esquema ni las tablas.
-2. Existe al menos un `GRANT` a nivel de columna.
-3. Los privilegios por defecto protegen tablas futuras.
-4. La salida de `\du` y de `information_schema.role_table_grants` permite verificar la política.
+Criterios de aceptacion: ningun rol funcional lee password_hash; app_web no
+concede roles ni borra ventas; no se otorga CREATEDB/CREATEROLE ni ADMIN OPTION.
+PUBLIC sin accesos. Las tablas futuras quedan cerradas por defecto; funciones
+futuras no heredan EXECUTE publico. Verificar con du, role_table_grants,
+role_column_grants y pruebas efectivas positivas/negativas.
