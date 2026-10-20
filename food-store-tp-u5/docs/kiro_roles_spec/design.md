@@ -24,5 +24,5 @@ La verificacion incluye permisos efectivos y negaciones, no solo una matriz.
 
 Auditoria global configurada manualmente por el usuario. Funciones emiten
 U5_AUTH sin passwords. log_statement=mod no registra SELECT: el simulacro usa
-log_statement=all en una sesion dedicada con parametros truncados a cero.
+log_statement=all en una sesion dedicada con parametros truncados a cero. Durante autenticacion se usa log_statement=none y log_min_error_statement=panic para impedir que RAISE LOG adjunte el STATEMENT sensible.
 Anonimizar el log antes de enviarlo a IA. No se exponen claves ni hashes.

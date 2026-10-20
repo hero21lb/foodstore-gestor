@@ -1,0 +1,118 @@
+BEGIN
+DO
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+CREATE ROLE
+REVOKE
+REVOKE
+REVOKE
+REVOKE
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT ROLE
+GRANT ROLE
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+CREATE TABLE
+INSERT 0 18
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+CREATE FUNCTION
+CREATE FUNCTION
+GRANT
+ALTER FUNCTION
+ALTER FUNCTION
+REVOKE
+REVOKE
+GRANT
+GRANT
+COMMIT
+                                   List of roles
+      Role name       |                         Attributes                         
+----------------------+------------------------------------------------------------
+ admin_datos          | 
+ app_web              | 
+ foodstore_auth_owner | Cannot login
+ postgres             | Superuser, Create role, Create DB, Replication, Bypass RLS
+ rol_app_escritura    | Cannot login
+ rol_app_lectura      | Cannot login
+ rol_reportes         | Cannot login
+ rol_soporte          | Cannot login
+
+       grantee        |   table_name    | privilege_type 
+----------------------+-----------------+----------------
+ foodstore_auth_owner | usuario         | SELECT
+ rol_app_escritura    | auditoria_stock | INSERT
+ rol_app_escritura    | categoria       | SELECT
+ rol_app_escritura    | cliente         | SELECT
+ rol_app_escritura    | detalle_pedido  | INSERT
+ rol_app_escritura    | detalle_pedido  | SELECT
+ rol_app_escritura    | detalle_pedido  | UPDATE
+ rol_app_escritura    | pedido          | INSERT
+ rol_app_escritura    | pedido          | SELECT
+ rol_app_escritura    | pedido          | UPDATE
+ rol_app_escritura    | producto        | INSERT
+ rol_app_escritura    | producto        | SELECT
+ rol_app_escritura    | producto        | UPDATE
+ rol_app_lectura      | categoria       | SELECT
+ rol_app_lectura      | cliente         | SELECT
+ rol_app_lectura      | detalle_pedido  | SELECT
+ rol_app_lectura      | pedido          | SELECT
+ rol_app_lectura      | producto        | SELECT
+ rol_reportes         | categoria       | SELECT
+ rol_reportes         | detalle_pedido  | SELECT
+ rol_reportes         | pedido          | SELECT
+ rol_reportes         | producto        | SELECT
+ rol_soporte          | auditoria_stock | SELECT
+ rol_soporte          | categoria       | SELECT
+ rol_soporte          | detalle_pedido  | SELECT
+ rol_soporte          | pedido          | SELECT
+ rol_soporte          | producto        | SELECT
+(27 rows)
+
+      grantee      | table_name | column_name | privilege_type 
+-------------------+------------+-------------+----------------
+ rol_app_escritura | cliente    | apellido    | SELECT
+ rol_app_escritura | cliente    | celular     | SELECT
+ rol_app_escritura | cliente    | id          | SELECT
+ rol_app_escritura | cliente    | mail        | SELECT
+ rol_app_escritura | cliente    | nombre      | SELECT
+ rol_app_lectura   | cliente    | apellido    | SELECT
+ rol_app_lectura   | cliente    | celular     | SELECT
+ rol_app_lectura   | cliente    | id          | SELECT
+ rol_app_lectura   | cliente    | mail        | SELECT
+ rol_app_lectura   | cliente    | nombre      | SELECT
+ rol_app_lectura   | usuario    | activo      | SELECT
+ rol_app_lectura   | usuario    | fecha_alta  | SELECT
+ rol_app_lectura   | usuario    | id          | SELECT
+ rol_app_lectura   | usuario    | mail        | SELECT
+ rol_app_lectura   | usuario    | nombre      | SELECT
+ rol_app_lectura   | usuario    | rol         | SELECT
+ rol_reportes      | usuario    | fecha_alta  | SELECT
+ rol_reportes      | usuario    | id          | SELECT
+ rol_reportes      | usuario    | rol         | SELECT
+ rol_soporte       | cliente    | apellido    | SELECT
+ rol_soporte       | cliente    | id          | SELECT
+ rol_soporte       | cliente    | nombre      | SELECT
+ rol_soporte       | usuario    | activo      | SELECT
+ rol_soporte       | usuario    | id          | SELECT
+ rol_soporte       | usuario    | nombre      | SELECT
+ rol_soporte       | usuario    | rol         | SELECT
+(26 rows)
+

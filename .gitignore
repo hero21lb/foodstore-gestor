@@ -1,0 +1,8 @@
+node_modules/
+**/__pycache__/
+**/backups/
+**/*.dump
+.env
+.env.*
+!.env.example
+**/configuracion_privada.json
