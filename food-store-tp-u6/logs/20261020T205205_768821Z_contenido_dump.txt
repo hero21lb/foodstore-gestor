@@ -1,0 +1,71 @@
+;
+; Archive created at 2026-10-20 17:52:09
+;     dbname: foodstore
+;     TOC Entries: 60
+;     Compression: gzip
+;     Dump Version: 1.16-0
+;     Format: CUSTOM
+;     Integer: 4 bytes
+;     Offset: 8 bytes
+;     Dumped from database version: 18.6 (Debian 18.6-1.pgdg13+2)
+;     Dumped by pg_dump version: 18.6
+;
+;
+; Selected TOC Entries:
+;
+871; 1247 41081 TYPE public forma_pago postgres
+236; 1255 41278 FUNCTION public fn_auditar_cambio_stock() postgres
+237; 1255 41280 FUNCTION public fn_total_pedido(bigint) postgres
+249; 1255 41281 PROCEDURE public sp_registrar_pedido(bigint, public.forma_pago, jsonb, bigint) postgres
+235; 1255 41242 FUNCTION public trg_check_precio_unitario() postgres
+234; 1259 41266 TABLE public auditoria_stock postgres
+233; 1259 41265 SEQUENCE public auditoria_stock_id_seq postgres
+219; 1259 41087 TABLE public categoria postgres
+220; 1259 41094 SEQUENCE public categoria_id_seq postgres
+221; 1259 41095 TABLE public cliente postgres
+222; 1259 41102 SEQUENCE public cliente_id_seq postgres
+223; 1259 41103 TABLE public detalle_pedido postgres
+3546; 0 0 COMMENT public CONSTRAINT chk_detalle_cantidad_rango ON detalle_pedido postgres
+224; 1259 41113 SEQUENCE public detalle_pedido_id_seq postgres
+225; 1259 41114 TABLE public pedido postgres
+3547; 0 0 COMMENT public CONSTRAINT chk_pedido_fecha_no_futura ON pedido postgres
+226; 1259 41122 TABLE public producto postgres
+232; 1259 41256 MATERIALIZED VIEW public mv_facturacion_categoria_mes postgres
+227; 1259 41140 SEQUENCE public pedido_id_seq postgres
+228; 1259 41141 SEQUENCE public producto_id_seq postgres
+231; 1259 41252 VIEW public vw_detalle_pedido postgres
+230; 1259 41248 VIEW public vw_pedidos_cliente postgres
+229; 1259 41244 VIEW public vw_productos_vigentes postgres
+3539; 0 41266 TABLE DATA public auditoria_stock postgres
+3527; 0 41087 TABLE DATA public categoria postgres
+3529; 0 41095 TABLE DATA public cliente postgres
+3531; 0 41103 TABLE DATA public detalle_pedido postgres
+3533; 0 41114 TABLE DATA public pedido postgres
+3534; 0 41122 TABLE DATA public producto postgres
+3548; 0 0 SEQUENCE SET public auditoria_stock_id_seq postgres
+3549; 0 0 SEQUENCE SET public categoria_id_seq postgres
+3550; 0 0 SEQUENCE SET public cliente_id_seq postgres
+3551; 0 0 SEQUENCE SET public detalle_pedido_id_seq postgres
+3552; 0 0 SEQUENCE SET public pedido_id_seq postgres
+3553; 0 0 SEQUENCE SET public producto_id_seq postgres
+3369; 2606 41277 CONSTRAINT public auditoria_stock auditoria_stock_pkey postgres
+3349; 2606 41155 CONSTRAINT public categoria categoria_pkey postgres
+3351; 2606 41157 CONSTRAINT public cliente cliente_mail_key postgres
+3353; 2606 41159 CONSTRAINT public cliente cliente_pkey postgres
+3355; 2606 41161 CONSTRAINT public detalle_pedido detalle_pedido_pedido_id_producto_id_key postgres
+3357; 2606 41163 CONSTRAINT public detalle_pedido detalle_pedido_pkey postgres
+3362; 2606 41165 CONSTRAINT public pedido pedido_pkey postgres
+3366; 2606 41167 CONSTRAINT public producto producto_pkey postgres
+3358; 1259 41168 INDEX public idx_detalle_producto_u3 postgres
+3359; 1259 41169 INDEX public idx_pedido_cliente postgres
+3360; 1259 41170 INDEX public idx_pedido_fecha_u3 postgres
+3363; 1259 41171 INDEX public idx_producto_categoria postgres
+3364; 1259 41172 INDEX public idx_producto_nombre_activo_u3 postgres
+3367; 1259 41264 INDEX public ux_mv_facturacion_categoria_mes postgres
+3374; 2620 41243 TRIGGER public detalle_pedido chk_precio_unitario postgres
+3375; 2620 41279 TRIGGER public producto trg_auditar_cambio_stock postgres
+3370; 2606 41174 FK CONSTRAINT public detalle_pedido detalle_pedido_pedido_id_fkey postgres
+3371; 2606 41179 FK CONSTRAINT public detalle_pedido detalle_pedido_producto_id_fkey postgres
+3372; 2606 41184 FK CONSTRAINT public pedido pedido_cliente_id_fkey postgres
+3373; 2606 41189 FK CONSTRAINT public producto producto_categoria_id_fkey postgres
+3537; 0 41256 MATERIALIZED VIEW DATA public mv_facturacion_categoria_mes postgres

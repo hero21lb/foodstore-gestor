@@ -1,0 +1,31 @@
+              name               | setting | unit 
+---------------------------------+---------+------
+ autovacuum                      | on      | 
+ autovacuum_analyze_scale_factor | 0.1     | 
+ autovacuum_analyze_threshold    | 50      | 
+ autovacuum_vacuum_scale_factor  | 0.2     | 
+ autovacuum_vacuum_threshold     | 50      | 
+(5 rows)
+
+ schemaname |           relname            | n_live_tup | n_dead_tup | n_mod_since_analyze |        last_autovacuum        |         last_analyze          |       last_autoanalyze        
+------------+------------------------------+------------+------------+---------------------+-------------------------------+-------------------------------+-------------------------------
+ public     | auditoria_stock              |          0 |          1 |                   0 |                               | 2026-10-20 20:51:58.056984+00 | 
+ public     | categoria                    |         20 |          0 |                   0 |                               | 2026-10-20 20:51:57.824296+00 | 
+ public     | cliente                      |       5000 |          0 |                   0 | 2026-10-20 20:47:29.774775+00 |                               | 2026-10-20 20:47:29.793414+00
+ public     | detalle_pedido               |      20000 |          1 |                   0 | 2026-10-20 20:47:29.823464+00 |                               | 2026-10-20 20:47:29.838269+00
+ public     | mv_facturacion_categoria_mes |        260 |          0 |                   0 |                               |                               | 2026-10-20 20:47:29.850378+00
+ public     | pedido                       |      20000 |          1 |                   0 | 2026-10-20 20:47:29.800588+00 |                               | 2026-10-20 20:47:29.816313+00
+ public     | producto                     |       1000 |          1 |                   0 |                               |                               | 2026-10-20 20:47:29.758977+00
+(7 rows)
+
+           relname            | n_live_tup | n_dead_tup | n_mod_since_analyze |         last_analyze          |       last_autoanalyze        
+------------------------------+------------+------------+---------------------+-------------------------------+-------------------------------
+ auditoria_stock              |          0 |          1 |                   0 | 2026-10-20 20:51:58.056984+00 | 
+ categoria                    |         20 |          0 |                   0 | 2026-10-20 20:51:57.824296+00 | 
+ cliente                      |       5000 |          0 |                   0 |                               | 2026-10-20 20:47:29.793414+00
+ detalle_pedido               |      20000 |          1 |                   0 |                               | 2026-10-20 20:47:29.838269+00
+ mv_facturacion_categoria_mes |        260 |          0 |                   0 |                               | 2026-10-20 20:47:29.850378+00
+ pedido                       |      20000 |          1 |                   0 |                               | 2026-10-20 20:47:29.816313+00
+ producto                     |       1000 |          1 |                   0 |                               | 2026-10-20 20:47:29.758977+00
+(7 rows)
+

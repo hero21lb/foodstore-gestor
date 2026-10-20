@@ -1,0 +1,31 @@
+{
+  "backup": "foodstore_20261020T205205_768821Z.dump",
+  "started_utc": "2026-10-20T20:52:05.768821+00:00",
+  "completed_utc": "2026-10-20T20:52:36.176968+00:00",
+  "bytes": 321577,
+  "format": "custom",
+  "exit_code": 0,
+  "snapshot_compartido": true,
+  "tables": {
+    "categoria": {
+      "count": 20,
+      "md5": "ebb9afdc031d26c7f0b71ab882d0dfff"
+    },
+    "producto": {
+      "count": 1000,
+      "md5": "c2d1a5d4995eb9a25674a82368d8f5e6"
+    },
+    "cliente": {
+      "count": 5000,
+      "md5": "7859b7acb902ef2fa89d4864c2bfc3d7"
+    },
+    "pedido": {
+      "count": 20000,
+      "md5": "0151bbd5fea250ec2761aa8de8c0785a"
+    },
+    "detalle_pedido": {
+      "count": 20000,
+      "md5": "2fd5f5b953dfe3108d8ba1dbf967b31c"
+    }
+  }
+}
