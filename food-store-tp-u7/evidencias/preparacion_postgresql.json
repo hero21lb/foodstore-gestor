@@ -1,0 +1,83 @@
+{
+  "fecha_utc": "2026-10-27T16:42:10.203805+00:00",
+  "base": "foodstore",
+  "respaldo": {
+    "archivo": "foodstore_antes_u7_20261027T164051Z.dump",
+    "bytes": 328069,
+    "sha256": "fa1c8336df5f9b1dce164da386413887061274583405514f65f160d7caf471a4"
+  },
+  "datos_previos_sin_cambios": true,
+  "huellas_antes": {
+    "pedido": {
+      "filas": 20000,
+      "sha256": "14e2cb42cd79ec9af89ab3099a4ed665f6cac1a1a59fa7ec0d59e78ffb9a220c"
+    },
+    "detalle_pedido": {
+      "filas": 20000,
+      "sha256": "48377fc9f5b4d8f8b69bf4fbc22f8a704027922e688e6b8e629fc597b9a10710"
+    },
+    "cliente": {
+      "filas": 5000,
+      "sha256": "5ced60ba659134a2c29a5d4f176921d5210b55342a4e419218ebf8b7964a5134"
+    },
+    "producto": {
+      "filas": 1000,
+      "sha256": "3d7e4e4e902900cecd421e17c418dfcfa7118e8cf5914fb92062fe0b15eb0077"
+    },
+    "categoria": {
+      "filas": 20,
+      "sha256": "2afe14837ed36dafd6dca4dce9673c11771344f0cbb1a064417833020cde6027"
+    }
+  },
+  "huellas_despues": {
+    "pedido": {
+      "filas": 20000,
+      "sha256": "14e2cb42cd79ec9af89ab3099a4ed665f6cac1a1a59fa7ec0d59e78ffb9a220c"
+    },
+    "detalle_pedido": {
+      "filas": 20000,
+      "sha256": "48377fc9f5b4d8f8b69bf4fbc22f8a704027922e688e6b8e629fc597b9a10710"
+    },
+    "cliente": {
+      "filas": 5000,
+      "sha256": "5ced60ba659134a2c29a5d4f176921d5210b55342a4e419218ebf8b7964a5134"
+    },
+    "producto": {
+      "filas": 1000,
+      "sha256": "3d7e4e4e902900cecd421e17c418dfcfa7118e8cf5914fb92062fe0b15eb0077"
+    },
+    "categoria": {
+      "filas": 20,
+      "sha256": "2afe14837ed36dafd6dca4dce9673c11771344f0cbb1a064417833020cde6027"
+    }
+  },
+  "estados_sinteticos": {
+    "1": "PENDIENTE",
+    "2": "CONFIRMADO",
+    "3": "ENTREGADO",
+    "4": "CANCELADO",
+    "5": "CONFIRMADO"
+  },
+  "distribucion_estados": [
+    [
+      "CANCELADO",
+      1
+    ],
+    [
+      "CONFIRMADO",
+      2
+    ],
+    [
+      "ENTREGADO",
+      1
+    ],
+    [
+      "PENDIENTE",
+      1
+    ],
+    [
+      null,
+      19995
+    ]
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "fecha_utc": "2026-10-27T16:44:24.603842+00:00",
+  "mongodb_version": "8.0.34",
+  "base_destino": "foodstore_u7",
+  "coleccion": "pedidos",
+  "documentos": 5,
+  "estados_de_prueba": {
+    "1": "PENDIENTE",
+    "2": "CONFIRMADO",
+    "3": "ENTREGADO",
+    "4": "CANCELADO",
+    "5": "CONFIRMADO"
+  },
+  "indices": [
+    "_id_",
+    "idx_estado_u7",
+    "idx_producto_u7",
+    "idx_total_u7"
+  ],
+  "parametros": {
+    "ids": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "estado": "CONFIRMADO",
+    "producto_id": 2,
+    "umbral": "300.00"
+  },
+  "postgresql": {
+    "todos": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "estado": [
+      2,
+      5
+    ],
+    "producto": [
+      1
+    ],
+    "total": [
+      2,
+      3,
+      4
+    ]
+  },
+  "mongodb": {
+    "todos": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "estado": [
+      2,
+      5
+    ],
+    "producto": [
+      1
+    ],
+    "total": [
+      2,
+      3,
+      4
+    ]
+  },
+  "coinciden": true,
+  "documentos_identicos_al_origen_transformado": true,
+  "alcance_comparacion": "Solo los mismos cinco pedidos en ambos motores",
+  "umbral_justificacion": "300 separa importes menores y mayores dentro de la muestra.",
+  "conexion_mongodb": "Tunel SSH efimero; sin proxy TCP publico"
+}

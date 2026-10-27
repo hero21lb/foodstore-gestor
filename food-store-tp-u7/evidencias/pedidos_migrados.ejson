@@ -1,0 +1,242 @@
+[
+  {
+    "_id": {
+      "$numberLong": "1"
+    },
+    "fecha": {
+      "$date": {
+        "$numberLong": "1790006014697"
+      }
+    },
+    "fecha_origen_iso": "2026-09-21T15:53:34.697461+00:00",
+    "forma_pago": "TARJETA",
+    "estado": "PENDIENTE",
+    "cliente": {
+      "id": {
+        "$numberLong": "2"
+      },
+      "alias": "Cliente laboratorio 2"
+    },
+    "lineas": [
+      {
+        "detalle_id": {
+          "$numberLong": "1"
+        },
+        "producto_id": {
+          "$numberLong": "2"
+        },
+        "nombre": "Producto 2",
+        "cantidad": {
+          "$numberInt": "2"
+        },
+        "precio_unitario": {
+          "$numberDecimal": "101.00"
+        },
+        "subtotal": {
+          "$numberDecimal": "202.00"
+        }
+      }
+    ],
+    "total": {
+      "$numberDecimal": "202.00"
+    },
+    "origen": {
+      "base": "foodstore",
+      "esquema": "public",
+      "estado_sintetico_u7": true,
+      "cliente_seudonimizado": true
+    }
+  },
+  {
+    "_id": {
+      "$numberLong": "2"
+    },
+    "fecha": {
+      "$date": {
+        "$numberLong": "1789919614697"
+      }
+    },
+    "fecha_origen_iso": "2026-09-20T15:53:34.697461+00:00",
+    "forma_pago": "TRANSFERENCIA",
+    "estado": "CONFIRMADO",
+    "cliente": {
+      "id": {
+        "$numberLong": "3"
+      },
+      "alias": "Cliente laboratorio 3"
+    },
+    "lineas": [
+      {
+        "detalle_id": {
+          "$numberLong": "2"
+        },
+        "producto_id": {
+          "$numberLong": "3"
+        },
+        "nombre": "Producto 3",
+        "cantidad": {
+          "$numberInt": "3"
+        },
+        "precio_unitario": {
+          "$numberDecimal": "102.00"
+        },
+        "subtotal": {
+          "$numberDecimal": "306.00"
+        }
+      }
+    ],
+    "total": {
+      "$numberDecimal": "306.00"
+    },
+    "origen": {
+      "base": "foodstore",
+      "esquema": "public",
+      "estado_sintetico_u7": true,
+      "cliente_seudonimizado": true
+    }
+  },
+  {
+    "_id": {
+      "$numberLong": "3"
+    },
+    "fecha": {
+      "$date": {
+        "$numberLong": "1789833214697"
+      }
+    },
+    "fecha_origen_iso": "2026-09-19T15:53:34.697461+00:00",
+    "forma_pago": "EFECTIVO",
+    "estado": "ENTREGADO",
+    "cliente": {
+      "id": {
+        "$numberLong": "4"
+      },
+      "alias": "Cliente laboratorio 4"
+    },
+    "lineas": [
+      {
+        "detalle_id": {
+          "$numberLong": "3"
+        },
+        "producto_id": {
+          "$numberLong": "4"
+        },
+        "nombre": "Producto 4",
+        "cantidad": {
+          "$numberInt": "4"
+        },
+        "precio_unitario": {
+          "$numberDecimal": "103.00"
+        },
+        "subtotal": {
+          "$numberDecimal": "412.00"
+        }
+      }
+    ],
+    "total": {
+      "$numberDecimal": "412.00"
+    },
+    "origen": {
+      "base": "foodstore",
+      "esquema": "public",
+      "estado_sintetico_u7": true,
+      "cliente_seudonimizado": true
+    }
+  },
+  {
+    "_id": {
+      "$numberLong": "4"
+    },
+    "fecha": {
+      "$date": {
+        "$numberLong": "1789746814697"
+      }
+    },
+    "fecha_origen_iso": "2026-09-18T15:53:34.697461+00:00",
+    "forma_pago": "TARJETA",
+    "estado": "CANCELADO",
+    "cliente": {
+      "id": {
+        "$numberLong": "5"
+      },
+      "alias": "Cliente laboratorio 5"
+    },
+    "lineas": [
+      {
+        "detalle_id": {
+          "$numberLong": "4"
+        },
+        "producto_id": {
+          "$numberLong": "5"
+        },
+        "nombre": "Producto 5",
+        "cantidad": {
+          "$numberInt": "5"
+        },
+        "precio_unitario": {
+          "$numberDecimal": "104.00"
+        },
+        "subtotal": {
+          "$numberDecimal": "520.00"
+        }
+      }
+    ],
+    "total": {
+      "$numberDecimal": "520.00"
+    },
+    "origen": {
+      "base": "foodstore",
+      "esquema": "public",
+      "estado_sintetico_u7": true,
+      "cliente_seudonimizado": true
+    }
+  },
+  {
+    "_id": {
+      "$numberLong": "5"
+    },
+    "fecha": {
+      "$date": {
+        "$numberLong": "1789660414697"
+      }
+    },
+    "fecha_origen_iso": "2026-09-17T15:53:34.697461+00:00",
+    "forma_pago": "TRANSFERENCIA",
+    "estado": "CONFIRMADO",
+    "cliente": {
+      "id": {
+        "$numberLong": "6"
+      },
+      "alias": "Cliente laboratorio 6"
+    },
+    "lineas": [
+      {
+        "detalle_id": {
+          "$numberLong": "5"
+        },
+        "producto_id": {
+          "$numberLong": "6"
+        },
+        "nombre": "Producto 6",
+        "cantidad": {
+          "$numberInt": "1"
+        },
+        "precio_unitario": {
+          "$numberDecimal": "105.00"
+        },
+        "subtotal": {
+          "$numberDecimal": "105.00"
+        }
+      }
+    ],
+    "total": {
+      "$numberDecimal": "105.00"
+    },
+    "origen": {
+      "base": "foodstore",
+      "esquema": "public",
+      "estado_sintetico_u7": true,
+      "cliente_seudonimizado": true
+    }
+  }
+]
