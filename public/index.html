@@ -14,6 +14,8 @@
         <button class="nav" data-view="products">Productos</button>
         <button class="nav" data-view="categories">Categorías</button>
         <button class="nav" data-view="orders">Pedidos</button>
+        <button class="nav" data-view="lab">Laboratorio TPI</button>
+        <button class="nav" data-view="defensa">Defensa</button>
       </nav>
       <div class="status"><i></i><span id="connection">Conectando a Railway…</span></div>
     </aside>
@@ -30,6 +32,40 @@
       </section>
       <section id="categories" class="view"><div class="section-line"><div><p>ORGANIZACIÓN DEL CATÁLOGO</p><h2>Categorías</h2></div><button class="primary" id="new-category">+ Nueva categoría</button></div><div id="category-grid" class="card-grid"></div></section>
       <section id="orders" class="view"><div class="section-line"><div><p>VENTAS REGISTRADAS</p><h2>Últimos pedidos</h2></div><span class="muted">Hasta 100 registros</span></div><div class="panel table-panel"><table><thead><tr><th>Pedido</th><th>Fecha</th><th>Cliente</th><th>Pago</th><th>Unidades</th><th>Total</th></tr></thead><tbody id="orders-body"></tbody></table></div></section>
+
+      <section id="lab" class="view">
+        <div class="lab-hero">
+          <div><p>MODO DEFENSA · U1 A U8</p><h2>Todo el TPI, probado desde el gestor.</h2><span>Elegí una unidad, ejecutá la prueba y mostrá el resultado real. Los botones no modifican datos de negocio sin avisar.</span></div>
+          <div class="lab-stamp">8<br><small>UNIDADES</small></div>
+        </div>
+        <div id="lab-overview" class="lab-overview">Cargando estado del laboratorio…</div>
+        <div id="lab-grid" class="lab-grid"></div>
+      </section>
+
+      <section id="defensa" class="view">
+        <div class="section-line"><div><p>CHARLA CARA A CARA</p><h2>Guía de defensa · 10 minutos</h2></div><span class="muted">3 integrantes · demo en vivo</span></div>
+        <div class="defense-grid">
+          <article class="defense-card"><p>0:00 – 1:00 · NAHUEL</p><h3>Apertura y mapa</h3><span>“PostgreSQL decide precio, stock y venta; MongoDB documenta el pedido; SQLite propone y simula. El móvil propone, el servidor dispone.” Mostrar el Laboratorio TPI y el estado de los tres motores.</span></article>
+          <article class="defense-card"><p>1:00 – 3:00 · NAHUEL</p><h3>U1 a U3</h3><span>Probar restricciones (fecha futura, cantidad 0, precio 1,5x), la concurrencia con FOR UPDATE y el plan de una consulta. Mostrar vistas y refrescar la materializada.</span></article>
+          <article class="defense-card"><p>3:00 – 5:00 · JUAN</p><h3>U4 a U6</h3><span>FNBC: vista y EXCEPT = 0. Top de categorías normal vs. desnormalizado. Roles: 42501 en hash/GRANT. Auditoría: generar evento. Mantenimiento: RTO 32,224 s.</span></article>
+          <article class="defense-card"><p>5:00 – 7:00 · ELÍAS</p><h3>U7 y U8</h3><span>MongoDB: mismos IDs que PostgreSQL. SQLite: C2 conflicto, C3 stock, C4 baja lógica, C6 UUID repetido. Cerrar con “SIMULADO_APROBADO no es una venta”.</span></article>
+          <article class="defense-card"><p>7:00 – 8:30 · LOS TRES</p><h3>IA y decisiones</h3><span>Un hallazgo aceptado (H-03 facturación histórica), uno corregido (H-02 índices duplicados) y uno descartado (H-05 índice redundante). Aclarar la limitación de OpenCode en U5.</span></article>
+          <article class="defense-card"><p>8:30 – 10:00 · PREGUNTAS</p><h3>Cierre</h3><span>Responder con el gestor abierto: no leer diapositivas. Si no se sabe, decir qué se probó y qué quedaría pendiente.</span></article>
+        </div>
+        <div class="panel defense-questions">
+          <div class="panel-title"><div><p>PREGUNTAS PROBABLES</p><h3>Respuestas cortas</h3></div></div>
+          <table><thead><tr><th>Pregunta</th><th>Respuesta</th></tr></thead><tbody>
+            <tr><td>¿Por qué PostgreSQL manda?</td><td>Porque tiene ACID, FK, CHECK, triggers y transacciones; el precio y el stock no se negocian desde la tablet.</td></tr>
+            <tr><td>¿Por qué MongoDB?</td><td>Porque el pedido es un documento con líneas embebidas y se consulta por estado/producto/importe; no reemplaza la venta relacional.</td></tr>
+            <tr><td>¿Qué es SIMULADO_APROBADO?</td><td>Una simulación: los datos coinciden, pero no se confirma la venta. La confirmación sería del servidor.</td></tr>
+            <tr><td>¿Qué pasa si restauran un respaldo viejo?</td><td>La tablet no manda: se recarga la instantánea y el semáforo vuelve a evaluar; precios viejos dan CONFLICTO.</td></tr>
+            <tr><td>¿Por qué desnormalizar?</td><td>Para acelerar el top de categorías, con triggers y auditoría que mantienen la redundancia bajo control.</td></tr>
+            <tr><td>¿Qué significa 42501?</td><td>Permiso insuficiente: el rol no puede leer el hash ni autoasignarse admin_datos. Es la prueba de mínimo privilegio.</td></tr>
+            <tr><td>¿Cómo evitan duplicados?</td><td>UUID como PK en SQLite y, en un sistema real, idempotencia por solicitud_uuid en el servidor.</td></tr>
+            <tr><td>¿Qué hizo la IA?</td><td>Revisó scripts y generó borradores. Nosotros probamos, aceptamos, corregimos o descartamos; el detalle está en la DUIA.</td></tr>
+          </tbody></table>
+        </div>
+      </section>
     </main>
     <dialog id="modal"><form method="dialog" id="modal-form"><button class="close" value="cancel">×</button><p id="modal-kicker">GESTIÓN</p><h2 id="modal-title"></h2><div id="modal-fields"></div><div class="modal-actions"><button value="cancel" class="ghost">Cancelar</button><button class="primary" id="save" value="default">Guardar</button></div></form></dialog>
     <div id="toast"></div>

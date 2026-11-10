@@ -10,6 +10,7 @@
 - `TPI_U4_U8_Informe_Tecnico.pdf`: el mismo informe en PDF.
 - `CHECKLIST.md`: mapa de objetivos del campus contra archivos y evidencias.
 - `DUIA.md`: declaración consolidada de uso de IA.
+- `GUIA_DEFENSA.md`: guion de la charla cara a cara y reparto por integrante.
 - `generar_informe_tpi.py`: genera el PDF desde el Markdown.
 
 ## Unidades
