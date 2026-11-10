@@ -372,7 +372,7 @@ app.get("/api/lab/u4/fnbc", asyncRoute(async (_req, res) => {
 }));
 
 app.get("/api/lab/u4/top", asyncRoute(async (_req, res) => {
-  const day = (await pool.query("SELECT max(fecha_venta_u4)::text AS d FROM detalle_pedido")).rows[0].d;
+  const day = (await pool.query("SELECT fecha_venta_u4::text AS d FROM detalle_pedido GROUP BY fecha_venta_u4 ORDER BY count(*) DESC LIMIT 1")).rows[0].d;
   const normalSql = `
     SELECT c.id AS categoria_id, c.nombre AS categoria,
            SUM(dp.cantidad * dp.precio_unitario)::numeric(14,2) AS total
