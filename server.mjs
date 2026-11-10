@@ -229,6 +229,9 @@ app.get("/api/lab/u1/restricciones", asyncRoute(async (_req, res) => {
     ["Cantidad 0", `INSERT INTO detalle_pedido (cantidad, precio_unitario, pedido_id, producto_id) VALUES (0, ${precio}, ${pedido}, ${producto})`],
     ["Cantidad 50", `INSERT INTO detalle_pedido (cantidad, precio_unitario, pedido_id, producto_id) VALUES (50, ${precio}, ${pedido}, ${producto})`],
     ["Precio > 1,5x", `INSERT INTO detalle_pedido (cantidad, precio_unitario, pedido_id, producto_id) VALUES (1, ${Number(precio) * 2}, ${pedido}, ${producto})`],
+    ["Mail duplicado", `INSERT INTO cliente (nombre, apellido, mail) VALUES ('Test', 'Duplicado', (SELECT mail FROM cliente LIMIT 1))`],
+    ["FK de categoría inexistente", `INSERT INTO producto (nombre, precio, stock, categoria_id) VALUES ('Producto X', 1, 1, 999999)`],
+    ["Detalle duplicado", `INSERT INTO detalle_pedido (cantidad, precio_unitario, pedido_id, producto_id) VALUES (1, ${precio}, ${pedido}, ${producto})`],
     ["Baja lógica", `UPDATE producto SET activo = false WHERE id = ${producto} RETURNING id`],
   ];
   const results = [];
