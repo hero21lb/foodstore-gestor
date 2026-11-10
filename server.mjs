@@ -3,7 +3,10 @@ import { Pool } from "pg";
 import path from "node:path";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
+import { webcrypto } from "node:crypto";
 import initSqlJs from "sql.js";
+
+if (!globalThis.crypto) globalThis.crypto = webcrypto;
 
 const app = express();
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -538,7 +541,7 @@ app.get("/api/lab/u7/estado", asyncRoute(async (_req, res) => {
     `, [ids]);
     res.json({ modo: "mongo", total, muestra, estado, producto, importe, postgres: pg.rows[0].ids, evidence });
   } catch (error) {
-    res.json({ modo: "error", message: error.message, evidence });
+    res.json({ modo: "evidencia", message: "MongoDB no respondió; se muestra la evidencia de U7.", detalle: error.message, evidence });
   }
 }));
 
