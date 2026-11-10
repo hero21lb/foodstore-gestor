@@ -1,0 +1,105 @@
+graph FoodStoreER {
+    graph [rankdir=LR, splines=spline, overlap=false, nodesep=0.6, ranksep=1.2, bgcolor="white"];
+    node  [fontname="Arial", fontsize=11];
+    edge  [fontname="Arial", fontsize=10];
+
+    /* ===== ENTIDADES (rectángulo) ===== */
+    CATEGORIA    [label="CATEGORÍA",   shape=box];
+    PRODUCTO     [label="PRODUCTO",    shape=box];
+    CLIENTE      [label="CLIENTE",     shape=box];
+    PEDIDO       [label="PEDIDO",      shape=box];
+    /* entidad débil: doble rectángulo */
+    LINEA_PEDIDO [label="LÍNEA_PEDIDO", shape=box, peripheries=2];
+
+    /* ===== RELACIONES (rombo) ===== */
+    clasifica  [label="clasifica",    shape=diamond];
+    corresponde [label="corresponde_a", shape=diamond];
+    realiza    [label="realiza",      shape=diamond];
+    /* relación identificadora: doble rombo */
+    contiene   [label="contiene",     shape=diamond, peripheries=2];
+
+    /* ===== ATRIBUTOS (óvalo) ===== */
+    /* CATEGORÍA */
+    CAT_id       [label=< <u>id</u> >, shape=ellipse];
+    CAT_nombre   [label="nombre", shape=ellipse];
+    CAT_activo   [label="activo", shape=ellipse];
+    /* PRODUCTO */
+    PR_id        [label=< <u>id</u> >, shape=ellipse];
+    PR_nombre    [label="nombre", shape=ellipse];
+    PR_precio    [label="precio", shape=ellipse];
+    PR_stock     [label="stock", shape=ellipse];
+    PR_desc      [label="descripción", shape=ellipse];
+    PR_activo    [label="activo", shape=ellipse];
+    /* CLIENTE */
+    CL_id        [label=< <u>id</u> >, shape=ellipse];
+    CL_nombre    [label="nombre", shape=ellipse];
+    CL_apellido  [label="apellido", shape=ellipse];
+    CL_email     [label="email", shape=ellipse];
+    /* atributo multivaluado: doble óvalo */
+    CL_tel       [label="teléfono", shape=ellipse, peripheries=2];
+    /* PEDIDO */
+    PE_id        [label=< <u>id</u> >, shape=ellipse];
+    PE_fecha     [label="fecha", shape=ellipse];
+    PE_forma     [label="forma_pago", shape=ellipse];
+    /* LÍNEA_PEDIDO (débil) */
+    LP_prod      [label=< <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD SIDES="B" STYLE="DASHED">producto_id</TD></TR></TABLE> >, shape=ellipse];
+    LP_cant      [label="cantidad", shape=ellipse];
+    LP_precio    [label="precio_unitario", shape=ellipse];
+    /* atributo derivado: óvalo punteado */
+    LP_subtotal  [label="subtotal", shape=ellipse, style=dashed];
+
+    /* ===== ENTIDAD - ATRIBUTO ===== */
+    CATEGORIA -- CAT_id;
+    CATEGORIA -- CAT_nombre;
+    CATEGORIA -- CAT_activo;
+
+    PRODUCTO -- PR_id;
+    PRODUCTO -- PR_nombre;
+    PRODUCTO -- PR_precio;
+    PRODUCTO -- PR_stock;
+    PRODUCTO -- PR_desc;
+    PRODUCTO -- PR_activo;
+
+    CLIENTE -- CL_id;
+    CLIENTE -- CL_nombre;
+    CLIENTE -- CL_apellido;
+    CLIENTE -- CL_email;
+    CLIENTE -- CL_tel;
+
+    PEDIDO -- PE_id;
+    PEDIDO -- PE_fecha;
+    PEDIDO -- PE_forma;
+
+    LINEA_PEDIDO -- LP_prod;
+    LINEA_PEDIDO -- LP_cant;
+    LINEA_PEDIDO -- LP_precio;
+    LINEA_PEDIDO -- LP_subtotal;
+
+    /* ===== ENTIDAD - RELACIÓN (cardinalidad y ordinalidad: min,max) ===== */
+    CATEGORIA -- clasifica   [taillabel="(0,N)"];
+    PRODUCTO  -- clasifica   [taillabel="(1,1)"];
+
+    CLIENTE -- realiza [taillabel="(0,N)"];
+    PEDIDO  -- realiza [taillabel="(1,1)"];
+
+    PEDIDO       -- contiene [taillabel="(1,N)"];
+    LINEA_PEDIDO -- contiene [taillabel="(1,1)"];
+
+    LINEA_PEDIDO -- corresponde [taillabel="(1,1)"];
+    PRODUCTO     -- corresponde [taillabel="(0,N)"];
+
+    /* ===== LEYENDA ===== */
+    subgraph cluster_legend {
+        label="LEYENDA";
+        fontname="Arial"; fontsize=11;
+        labelloc="t";
+        style=dashed; color=gray;
+        e1 [label="Entidad", shape=box, width=1.6];
+        e2 [label="Entidad débil", shape=box, peripheries=2, width=1.6];
+        r1 [label="Relación", shape=diamond];
+        r2 [label="Relación identificadora", shape=diamond, peripheries=2];
+        a1 [label="Atributo", shape=ellipse];
+        a2 [label="Multivaluado", shape=ellipse, peripheries=2];
+        a3 [label="Derivado", shape=ellipse, style=dashed];
+    }
+}

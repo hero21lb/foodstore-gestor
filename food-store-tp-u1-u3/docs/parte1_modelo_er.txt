@@ -1,0 +1,120 @@
+TRABAJO PRÁCTICO N.º 1 — Food Store
+Base de Datos I
+PARTE 1 — Modelo Entidad-Relación
+Notación: Chen
+
+============================================================================
+1. DICCIONARIO DE ENTIDADES Y ATRIBUTOS
+============================================================================
+
+CATEGORÍA
+  - id           numérico  PK
+  - nombre       texto
+  - activo       booleano   (baja lógica, R7)
+
+PRODUCTO
+  - id            numérico  PK
+  - nombre        texto
+  - descripción   texto     (atributo adicional razonable)
+  - precio        numérico/decimal
+  - stock         numérico/entero
+  - activo        booleano  (baja lógica, R7)
+  - categoria_id  numérico  FK → CATEGORÍA
+
+CLIENTE
+  - id          numérico  PK
+  - nombre      texto
+  - apellido    texto
+  - email       texto     clave candidata alternativa (UNIQUE, R6)
+  - teléfono    texto     multivaluado (atributo adicional razonable)
+
+PEDIDO
+  - id           numérico  PK
+  - fecha        fecha/hora
+  - forma_pago   texto (dominio cerrado/enumerado)
+  - cliente_id   numérico  FK → CLIENTE
+
+LÍNEA_PEDIDO  (entidad débil)
+  - pedido_id       numérico  FK → PEDIDO (parte de la clave)
+  - producto_id     numérico  discriminador (clave parcial), FK → PRODUCTO
+  - cantidad        numérico/entero
+  - precio_unitario numérico/decimal  (precio histórico de esa línea, R4)
+  - subtotal        numérico  derivado (cantidad × precio_unitario)
+
+============================================================================
+2. RELACIONES: CARDINALIDAD Y PARTICIPACIÓN (ordinalidad)
+============================================================================
+
+clasifica       CATEGORÍA (0,N)  —  PRODUCTO (1,1)   [1:N]
+  R1: todo producto pertenece a una categoría (total);
+      una categoría puede no tener productos (parcial).
+
+realiza         CLIENTE (0,N)  —  PEDIDO (1,1)       [1:N]
+  R2: todo pedido es de un cliente (total);
+      un cliente puede no tener pedidos (parcial).
+
+contiene        PEDIDO (1,N)  —  LÍNEA_PEDIDO (1,1)  [1:N]  (identificadora)
+  R3/R4: una línea pertenece siempre a un pedido (total, es débil);
+         un pedido tiene al menos una línea.
+
+corresponde_a   LÍNEA_PEDIDO (1,1)  —  PRODUCTO (0,N)  [1:N]
+  R3: cada línea corresponde a un único producto (total);
+      un producto puede aparecer en muchas líneas o en ninguna (parcial).
+
+Convención: (min, max)
+  min = 0 → participación parcial (opcional)
+  min = 1 → participación total (obligatoria)
+  max = 1 → una instancia
+  max = N → muchas instancias
+
+============================================================================
+3. RESPUESTAS A LAS PREGUNTAS GUÍA
+============================================================================
+
+P1. ¿Por qué la relación entre producto y pedido no puede resolverse como
+    una relación binaria simple 1:N? ¿Qué información se perdería?
+
+Porque según R3 es una relación de muchos a muchos (N:M): un pedido incluye
+varios productos distintos y un mismo producto aparece en muchos pedidos.
+Si se la modelara como 1:N se perdería información en dos sentidos:
+
+  a) No se podría representar que un mismo producto participa en muchos
+     pedidos sin duplicarlo de forma inconsistente.
+  b) Se perderían los atributos propios de cada línea del pedido (cantidad
+     y precio unitario histórico según R4). En una 1:N esos datos no tienen
+     dónde vivir de forma atómica: no son del producto (el precio de lista
+     cambia) ni del pedido (hay una cantidad por cada producto). Por eso la
+     relación N:M se resuelve con la entidad asociativa LÍNEA_PEDIDO, que
+     guarda "cuántas unidades y a qué precio" para cada par (pedido,
+     producto).
+
+P2. ¿Qué entidad tiene participación parcial en la relación con categoría,
+    y cuál tiene participación total? ¿Qué pasaría si invirtieras esa
+    lectura?
+
+PRODUCTO tiene participación total (todo producto pertenece exactamente a
+una categoría — R1) y CATEGORÍA tiene participación parcial (una categoría
+puede existir sin productos, por ejemplo una recién creada — R1).
+
+Si se invirtiera la lectura (CATEGORÍA total / PRODUCTO parcial) quedaría
+mal por dos motivos:
+  - Obligaría a que toda categoría tenga al menos un producto, lo que
+    contradice R1 (no se podrían crear categorías vacías).
+  - Permitiría productos sin categoría, lo que también viola R1 (todo
+    producto pertenece a una categoría).
+
+P3. ¿Alguno de tus atributos podría descomponerse en partes más simples?
+    Justificá tu decisión.
+
+Sí: el nombre del cliente. Se decide separarlo en "nombre" y "apellido".
+Justificación: mantenerlos separados permite ordenar y filtrar por apellido,
+mostrar resultados en formato "apellido, nombre" y hacer búsquedas
+independientes, sin pérdida de información. Es una descomposición atómica
+y útil para las consultas esperadas del sistema.
+
+El resto se mantiene compuesto o atómico por decisión:
+  - email y teléfono: atómicos, no se descomponen.
+  - precio: se deja como único atributo (una sola moneda), sin separar
+    moneda/valor.
+  - nombre del producto: se deja compuesto por simplicidad, ya que no hay
+    consultas que necesiten sus partes.

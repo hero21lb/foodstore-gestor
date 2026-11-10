@@ -1,0 +1,44 @@
+erDiagram
+    CATEGORIA {
+        int id PK
+        string nombre
+        boolean activo
+    }
+
+    PRODUCTO {
+        int id PK
+        string nombre
+        numeric precio
+        int stock
+        string descripcion
+        boolean activo
+        int categoria_id FK
+    }
+
+    CLIENTE {
+        int id PK
+        string nombre
+        string apellido
+        string email UK
+        string telefono
+    }
+
+    PEDIDO {
+        int id PK
+        timestamp fecha
+        enum forma_pago
+        int cliente_id FK
+    }
+
+    LINEA_PEDIDO {
+        int pedido_id PK,FK
+        int producto_id PK,FK
+        int cantidad
+        numeric precio_unitario
+        numeric subtotal
+    }
+
+    CATEGORIA ||--o{ PRODUCTO : "contiene (1:N)"
+    CLIENTE ||--o{ PEDIDO : "realiza (1:N)"
+    PEDIDO ||--|{ LINEA_PEDIDO : "incluye (1:N)"
+    PRODUCTO ||--o{ LINEA_PEDIDO : "aparece_en (1:N)"
