@@ -222,6 +222,7 @@ app.get("/api/lab/u1/restricciones", asyncRoute(async (_req, res) => {
   const { rows } = await pool.query("SELECT min(id) AS producto, (SELECT min(id) FROM pedido) AS pedido, (SELECT min(id) FROM cliente) AS cliente FROM producto");
   const { producto, pedido, cliente } = rows[0];
   const precio = (await pool.query("SELECT precio FROM producto WHERE id = $1", [producto])).rows[0].precio;
+  const dup = (await pool.query("SELECT pedido_id, producto_id FROM detalle_pedido LIMIT 1")).rows[0];
   const tests = [
     ["Pedido válido", `INSERT INTO pedido (fecha, forma_pago, cliente_id) VALUES (now(), 'EFECTIVO', ${cliente}) RETURNING id`],
     ["Pedido con fecha futura", `INSERT INTO pedido (fecha, forma_pago, cliente_id) VALUES ('2030-01-01', 'EFECTIVO', ${cliente})`],
@@ -231,7 +232,7 @@ app.get("/api/lab/u1/restricciones", asyncRoute(async (_req, res) => {
     ["Precio > 1,5x", `INSERT INTO detalle_pedido (cantidad, precio_unitario, pedido_id, producto_id) VALUES (1, ${Number(precio) * 2}, ${pedido}, ${producto})`],
     ["Mail duplicado", `INSERT INTO cliente (nombre, apellido, mail) VALUES ('Test', 'Duplicado', (SELECT mail FROM cliente LIMIT 1))`],
     ["FK de categoría inexistente", `INSERT INTO producto (nombre, precio, stock, categoria_id) VALUES ('Producto X', 1, 1, 999999)`],
-    ["Detalle duplicado", `INSERT INTO detalle_pedido (cantidad, precio_unitario, pedido_id, producto_id) VALUES (1, ${precio}, ${pedido}, ${producto})`],
+    ["Detalle duplicado", `INSERT INTO detalle_pedido (cantidad, precio_unitario, pedido_id, producto_id) VALUES (1, ${precio}, ${dup.pedido_id}, ${dup.producto_id})`],
     ["Baja lógica", `UPDATE producto SET activo = false WHERE id = ${producto} RETURNING id`],
   ];
   const results = [];
