@@ -1,0 +1,207 @@
+
+==============================================================================
+U8 - Evidencia de ejecución
+==============================================================================
+Fecha de ejecución: 2026-11-10T14:14:35.527Z
+PostgreSQL de pruebas: foodstore_u8_lab (Railway)
+Tablet: SQLite 3.54.0 2026-10-09 15:46:58 be8d059e9a49089ab2dce5ed26dd87aaf598fdc5fbe0b107c0dd758464bcalt1 (64-bit)
+La tablet no ejecuta INSERT/UPDATE sobre PostgreSQL.
+
+==============================================================================
+0. Baseline PostgreSQL ANTES de las simulaciones
+==============================================================================
+{
+  "pedidos": "5",
+  "detalles": "7",
+  "stock_total": "220",
+  "md5_pedidos": "10c2d0044f769bd188ebc2ce804dded9",
+  "md5_detalles": "2d6cd57a2046238bcd08f46e3f0c8723"
+}
+
+==============================================================================
+1. Instantánea inicial S0 y creación de la tablet
+==============================================================================
+Filas exportadas: 5 -> u8/servidor_snapshot.csv
+CSV (primeras líneas):
+producto_id,nombre,precio_centavos,stock,disponible,eliminado,fecha_copia
+1,Muzzarella,105000,40,t,f,2026-11-10
+2,Napolitana,150000,35,t,f,2026-11-10
+3,Coca 1.5L,80000,100,t,f,2026-11-10
+$ sqlite3 tablet_u8.db < sql/u8/schema_sqlite.sql
+$ sqlite3 tablet_u8.db ".import --csv --skip 1 servidor_snapshot.csv snapshot_servidor"
+$ sqlite3 tablet_u8.db < sql/u8/carga_snapshot.sql
+5|5
+
+==============================================================================
+2. Pruebas 1.c: borrador, ROLLBACK, C1 y C7
+==============================================================================
+$ sqlite3 tablet_u8.db < sql/u8/pruebas_sqlite.sql
+--- 1.c.1 Borrador completo: BEGIN ... COMMIT ---
+borrador|1
+items|1
+solicitud|1
+--- 1.c.1 Bis: operación deshecha con ROLLBACK ---
+borrador_rollback|0
+items_rollback|0
+solicitud_rollback|0
+--- 1.c.2 Caso C1: catálogo disponible sin servidor ---
+3|Coca 1.5L|80000|100
+5|Limonada Feria|60000|30
+1|Muzzarella|105000|40
+2|Napolitana|150000|35
+4|Pizza Feria|120000|15
+--- 1.c.3 Caso C7: cantidad 0 y producto inexistente ---
+Intento con cantidad = 0 (debe fallar por CHECK):
+Intento con producto_id = 9999 (debe fallar por FK):
+items_invalidos_guardados|0
+Error near line 64: CHECK constraint failed: cantidad > 0
+Error near line 69: FOREIGN KEY constraint failed
+$ sqlite3 tablet_u8.db < sql/u8/semaforo.sql
+a1111111-1111-4111-8111-111111111111|11111111-1111-4111-8111-111111111111|SIMULADO_APROBADO|Sin diferencias contra la instantánea
+
+[tras C5] cola_sync:
+solicitud_uuid                           id_local                     estado                       motivo
+------------------------------------  ------------------------------------  -----------------  -------------------------------------
+a1111111-1111-4111-8111-111111111111  11111111-1111-4111-8111-111111111111  SIMULADO_APROBADO  Sin diferencias contra la instantánea
+
+==============================================================================
+3. Caso C2: precio del servidor sube
+==============================================================================
+Filas exportadas: 5 -> u8/snapshots/caso_c2.csv
+$ sqlite3 tablet_u8.db ".import --csv --skip 1 caso_c2.csv snapshot_servidor"
+$ sqlite3 tablet_u8.db < sql/u8/carga_snapshot.sql
+5|5
+$ sqlite3 tablet_u8.db < sql/u8/caso_c2a.sql
+C2a: solicitud creada
+$ sqlite3 tablet_u8.db < sql/u8/semaforo.sql
+b2222222-2222-4222-8222-222222222222|44444444-4444-4444-8444-444444444444|CONFLICTO|Cambio de precio: producto 1 visto 105000, ahora 110000
+a1111111-1111-4111-8111-111111111111|11111111-1111-4111-8111-111111111111|SIMULADO_APROBADO|Sin diferencias contra la instantánea
+
+[C2 con precio viejo] cola_sync:
+solicitud_uuid                           id_local                     estado                                motivo
+------------------------------------  ------------------------------------  -----------------  -------------------------------------------------------
+b2222222-2222-4222-8222-222222222222  44444444-4444-4444-8444-444444444444  CONFLICTO          Cambio de precio: producto 1 visto 105000, ahora 110000
+a1111111-1111-4111-8111-111111111111  11111111-1111-4111-8111-111111111111  SIMULADO_APROBADO  Sin diferencias contra la instantánea
+$ sqlite3 tablet_u8.db < sql/u8/caso_c2b.sql
+C2b: precio aceptado y solicitud nueva
+$ sqlite3 tablet_u8.db < sql/u8/semaforo.sql
+b2222222-2222-4222-8222-222222222222|44444444-4444-4444-8444-444444444444|CONFLICTO|Cambio de precio: producto 1 visto 105000, ahora 110000
+a1111111-1111-4111-8111-111111111111|11111111-1111-4111-8111-111111111111|SIMULADO_APROBADO|Sin diferencias contra la instantánea
+b2222222-2222-4222-8222-222222222223|44444444-4444-4444-8444-444444444444|SIMULADO_APROBADO|Sin diferencias contra la instantánea
+
+[C2 precio aceptado] cola_sync:
+solicitud_uuid                           id_local                     estado                                motivo
+------------------------------------  ------------------------------------  -----------------  -------------------------------------------------------
+b2222222-2222-4222-8222-222222222222  44444444-4444-4444-8444-444444444444  CONFLICTO          Cambio de precio: producto 1 visto 105000, ahora 110000
+a1111111-1111-4111-8111-111111111111  11111111-1111-4111-8111-111111111111  SIMULADO_APROBADO  Sin diferencias contra la instantánea
+b2222222-2222-4222-8222-222222222223  44444444-4444-4444-8444-444444444444  SIMULADO_APROBADO  Sin diferencias contra la instantánea
+
+==============================================================================
+4. Caso C3: stock insuficiente
+==============================================================================
+Filas exportadas: 5 -> u8/snapshots/caso_c3.csv
+$ sqlite3 tablet_u8.db ".import --csv --skip 1 caso_c3.csv snapshot_servidor"
+$ sqlite3 tablet_u8.db < sql/u8/carga_snapshot.sql
+5|5
+$ sqlite3 tablet_u8.db < sql/u8/caso_c3.sql
+C3: solicitud creada
+$ sqlite3 tablet_u8.db < sql/u8/semaforo.sql
+b2222222-2222-4222-8222-222222222222|44444444-4444-4444-8444-444444444444|CONFLICTO|Cambio de precio: producto 1 visto 105000, ahora 110000
+b3333333-3333-4333-8333-333333333333|55555555-5555-4555-8555-555555555555|RECHAZADO|stock insuficiente para producto 3 (pedido 5, disponible 2)
+a1111111-1111-4111-8111-111111111111|11111111-1111-4111-8111-111111111111|SIMULADO_APROBADO|Sin diferencias contra la instantánea
+b2222222-2222-4222-8222-222222222223|44444444-4444-4444-8444-444444444444|SIMULADO_APROBADO|Sin diferencias contra la instantánea
+
+[C3] cola_sync:
+solicitud_uuid                           id_local                     estado                                  motivo
+------------------------------------  ------------------------------------  -----------------  -----------------------------------------------------------
+b2222222-2222-4222-8222-222222222222  44444444-4444-4444-8444-444444444444  CONFLICTO          Cambio de precio: producto 1 visto 105000, ahora 110000
+b3333333-3333-4333-8333-333333333333  55555555-5555-4555-8555-555555555555  RECHAZADO          stock insuficiente para producto 3 (pedido 5, disponible 2)
+a1111111-1111-4111-8111-111111111111  11111111-1111-4111-8111-111111111111  SIMULADO_APROBADO  Sin diferencias contra la instantánea
+b2222222-2222-4222-8222-222222222223  44444444-4444-4444-8444-444444444444  SIMULADO_APROBADO  Sin diferencias contra la instantánea
+
+==============================================================================
+5. Caso C4: producto dado de baja
+==============================================================================
+Filas exportadas: 5 -> u8/snapshots/caso_c4.csv
+$ sqlite3 tablet_u8.db ".import --csv --skip 1 caso_c4.csv snapshot_servidor"
+$ sqlite3 tablet_u8.db < sql/u8/carga_snapshot.sql
+5|4
+$ sqlite3 tablet_u8.db < sql/u8/caso_c4.sql
+C4: solicitud creada
+$ sqlite3 tablet_u8.db < sql/u8/semaforo.sql
+b2222222-2222-4222-8222-222222222222|44444444-4444-4444-8444-444444444444|CONFLICTO|Cambio de precio: producto 1 visto 105000, ahora 110000
+b3333333-3333-4333-8333-333333333333|55555555-5555-4555-8555-555555555555|RECHAZADO|stock insuficiente para producto 3 (pedido 5, disponible 2)
+b4444444-4444-4444-8444-444444444444|66666666-6666-4666-8666-666666666666|RECHAZADO|producto 2 dado de baja
+a1111111-1111-4111-8111-111111111111|11111111-1111-4111-8111-111111111111|SIMULADO_APROBADO|Sin diferencias contra la instantánea
+b2222222-2222-4222-8222-222222222223|44444444-4444-4444-8444-444444444444|SIMULADO_APROBADO|Sin diferencias contra la instantánea
+
+[C4] cola_sync:
+solicitud_uuid                           id_local                     estado                                  motivo
+------------------------------------  ------------------------------------  -----------------  -----------------------------------------------------------
+b2222222-2222-4222-8222-222222222222  44444444-4444-4444-8444-444444444444  CONFLICTO          Cambio de precio: producto 1 visto 105000, ahora 110000
+b3333333-3333-4333-8333-333333333333  55555555-5555-4555-8555-555555555555  RECHAZADO          stock insuficiente para producto 3 (pedido 5, disponible 2)
+b4444444-4444-4444-8444-444444444444  66666666-6666-4666-8666-666666666666  RECHAZADO          producto 2 dado de baja
+a1111111-1111-4111-8111-111111111111  11111111-1111-4111-8111-111111111111  SIMULADO_APROBADO  Sin diferencias contra la instantánea
+b2222222-2222-4222-8222-222222222223  44444444-4444-4444-8444-444444444444  SIMULADO_APROBADO  Sin diferencias contra la instantánea
+$ sqlite3 tablet_u8.db < sql/u8/consulta_c4.sql
+C4: la fila del producto 2 sigue en la tablet, marcada como eliminada
+2|Napolitana|150000|0|1|2026-11-10
+C4: el catálogo operativo ya no lo muestra
+0
+C4: pero la fila no se borró
+1
+
+==============================================================================
+6. Caso C6: reenvío del mismo UUID
+==============================================================================
+$ sqlite3 tablet_u8.db < sql/u8/caso_c6.sql
+C6: reenvío del UUID ya usado (debe fallar por PK)
+C6: estado de la solicitud original (no se reevalúa)
+a1111111-1111-4111-8111-111111111111|SIMULADO_APROBADO|Sin diferencias contra la instantánea
+C6: cantidad total de solicitudes (no se duplicó)
+5
+Error near line 6: UNIQUE constraint failed: cola_sync.solicitud_uuid
+$ sqlite3 tablet_u8.db < sql/u8/semaforo.sql
+b2222222-2222-4222-8222-222222222222|44444444-4444-4444-8444-444444444444|CONFLICTO|Cambio de precio: producto 1 visto 105000, ahora 110000
+b3333333-3333-4333-8333-333333333333|55555555-5555-4555-8555-555555555555|RECHAZADO|stock insuficiente para producto 3 (pedido 5, disponible 2)
+b4444444-4444-4444-8444-444444444444|66666666-6666-4666-8666-666666666666|RECHAZADO|producto 2 dado de baja
+a1111111-1111-4111-8111-111111111111|11111111-1111-4111-8111-111111111111|SIMULADO_APROBADO|Sin diferencias contra la instantánea
+b2222222-2222-4222-8222-222222222223|44444444-4444-4444-8444-444444444444|SIMULADO_APROBADO|Sin diferencias contra la instantánea
+
+[C6] cola_sync:
+solicitud_uuid                           id_local                     estado                                  motivo
+------------------------------------  ------------------------------------  -----------------  -----------------------------------------------------------
+b2222222-2222-4222-8222-222222222222  44444444-4444-4444-8444-444444444444  CONFLICTO          Cambio de precio: producto 1 visto 105000, ahora 110000
+b3333333-3333-4333-8333-333333333333  55555555-5555-4555-8555-555555555555  RECHAZADO          stock insuficiente para producto 3 (pedido 5, disponible 2)
+b4444444-4444-4444-8444-444444444444  66666666-6666-4666-8666-666666666666  RECHAZADO          producto 2 dado de baja
+a1111111-1111-4111-8111-111111111111  11111111-1111-4111-8111-111111111111  SIMULADO_APROBADO  Sin diferencias contra la instantánea
+b2222222-2222-4222-8222-222222222223  44444444-4444-4444-8444-444444444444  SIMULADO_APROBADO  Sin diferencias contra la instantánea
+
+==============================================================================
+7. PostgreSQL DESPUÉS: pedidos y stock
+==============================================================================
+{
+  "pedidos": "5",
+  "detalles": "7",
+  "stock_total": "220",
+  "md5_pedidos": "10c2d0044f769bd188ebc2ce804dded9",
+  "md5_detalles": "2d6cd57a2046238bcd08f46e3f0c8723"
+}
+
+Comparación:
+{
+  "pedidos_iguales": true,
+  "detalles_iguales": true,
+  "stock_igual": true,
+  "md5_pedidos_igual": true,
+  "md5_detalles_igual": true
+}
+
+==============================================================================
+8. Resumen final de la cola
+==============================================================================
+estado        solicitudes
+-----------------  -----------
+CONFLICTO                    1
+RECHAZADO                    2
+SIMULADO_APROBADO            2

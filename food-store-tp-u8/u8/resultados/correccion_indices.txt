@@ -1,0 +1,32 @@
+[
+  {
+    "tablename": "detalle_pedido",
+    "indexname": "detalle_pedido_pedido_id_producto_id_key",
+    "indexdef": "CREATE UNIQUE INDEX detalle_pedido_pedido_id_producto_id_key ON public.detalle_pedido USING btree (pedido_id, producto_id)"
+  },
+  {
+    "tablename": "detalle_pedido",
+    "indexname": "detalle_pedido_pkey",
+    "indexdef": "CREATE UNIQUE INDEX detalle_pedido_pkey ON public.detalle_pedido USING btree (id)"
+  },
+  {
+    "tablename": "detalle_pedido",
+    "indexname": "idx_detalle_pedido_producto_u3",
+    "indexdef": "CREATE INDEX idx_detalle_pedido_producto_u3 ON public.detalle_pedido USING btree (producto_id)"
+  },
+  {
+    "tablename": "pedido",
+    "indexname": "idx_pedido_cliente",
+    "indexdef": "CREATE INDEX idx_pedido_cliente ON public.pedido USING btree (cliente_id)"
+  },
+  {
+    "tablename": "pedido",
+    "indexname": "idx_pedido_fecha_u3",
+    "indexdef": "CREATE INDEX idx_pedido_fecha_u3 ON public.pedido USING btree (fecha)"
+  },
+  {
+    "tablename": "pedido",
+    "indexname": "pedido_pkey",
+    "indexdef": "CREATE UNIQUE INDEX pedido_pkey ON public.pedido USING btree (id)"
+  }
+]

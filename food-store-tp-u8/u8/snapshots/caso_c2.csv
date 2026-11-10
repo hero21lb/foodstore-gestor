@@ -1,0 +1,6 @@
+producto_id,nombre,precio_centavos,stock,disponible,eliminado,fecha_copia
+1,Muzzarella,110000,40,t,f,2026-11-10
+2,Napolitana,150000,35,t,f,2026-11-10
+3,Coca 1.5L,80000,100,t,f,2026-11-10
+4,Pizza Feria,120000,15,t,f,2026-11-10
+5,Limonada Feria,60000,30,t,f,2026-11-10

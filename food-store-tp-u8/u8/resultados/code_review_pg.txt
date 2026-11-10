@@ -1,0 +1,116 @@
+
+## Índices duplicados sobre pedido(fecha) y detalle_pedido(producto_id)
+SELECT tablename, indexname, indexdef FROM pg_indexes
+ WHERE schemaname='public' AND tablename IN ('pedido','detalle_pedido','producto')
+ ORDER BY tablename, indexname
+--> [
+  {
+    "tablename": "detalle_pedido",
+    "indexname": "detalle_pedido_pedido_id_producto_id_key",
+    "indexdef": "CREATE UNIQUE INDEX detalle_pedido_pedido_id_producto_id_key ON public.detalle_pedido USING btree (pedido_id, producto_id)"
+  },
+  {
+    "tablename": "detalle_pedido",
+    "indexname": "detalle_pedido_pkey",
+    "indexdef": "CREATE UNIQUE INDEX detalle_pedido_pkey ON public.detalle_pedido USING btree (id)"
+  },
+  {
+    "tablename": "detalle_pedido",
+    "indexname": "idx_detalle_pedido_producto_u3",
+    "indexdef": "CREATE INDEX idx_detalle_pedido_producto_u3 ON public.detalle_pedido USING btree (producto_id)"
+  },
+  {
+    "tablename": "detalle_pedido",
+    "indexname": "idx_detalle_producto",
+    "indexdef": "CREATE INDEX idx_detalle_producto ON public.detalle_pedido USING btree (producto_id)"
+  },
+  {
+    "tablename": "pedido",
+    "indexname": "idx_pedido_cliente",
+    "indexdef": "CREATE INDEX idx_pedido_cliente ON public.pedido USING btree (cliente_id)"
+  },
+  {
+    "tablename": "pedido",
+    "indexname": "idx_pedido_fecha",
+    "indexdef": "CREATE INDEX idx_pedido_fecha ON public.pedido USING btree (fecha)"
+  },
+  {
+    "tablename": "pedido",
+    "indexname": "idx_pedido_fecha_u3",
+    "indexdef": "CREATE INDEX idx_pedido_fecha_u3 ON public.pedido USING btree (fecha)"
+  },
+  {
+    "tablename": "pedido",
+    "indexname": "pedido_pkey",
+    "indexdef": "CREATE UNIQUE INDEX pedido_pkey ON public.pedido USING btree (id)"
+  },
+  {
+    "tablename": "producto",
+    "indexname": "idx_producto_categoria",
+    "indexdef": "CREATE INDEX idx_producto_categoria ON public.producto USING btree (categoria_id)"
+  },
+  {
+    "tablename": "producto",
+    "indexname": "idx_producto_nombre",
+    "indexdef": "CREATE INDEX idx_producto_nombre ON public.producto USING btree (nombre)"
+  },
+  {
+    "tablename": "producto",
+    "indexname": "idx_producto_nombre_activo_u3",
+    "indexdef": "CREATE INDEX idx_producto_nombre_activo_u3 ON public.producto USING btree (nombre) WHERE (activo = true)"
+  },
+  {
+    "tablename": "producto",
+    "indexname": "producto_pkey",
+    "indexdef": "CREATE UNIQUE INDEX producto_pkey ON public.producto USING btree (id)"
+  }
+]
+
+## Índice ya existente sobre pedido(cliente_id) (propuesta descartada)
+SELECT indexname, indexdef FROM pg_indexes
+ WHERE schemaname='public' AND tablename='pedido' AND indexdef ILIKE '%cliente_id%'
+--> [
+  {
+    "indexname": "idx_pedido_cliente",
+    "indexdef": "CREATE INDEX idx_pedido_cliente ON public.pedido USING btree (cliente_id)"
+  }
+]
+
+## Restricción de cantidad: conviven el CHECK original y el de TP2
+SELECT conname, pg_get_constraintdef(oid) AS definicion
+ FROM pg_constraint WHERE conrelid='detalle_pedido'::regclass AND contype='c'
+ ORDER BY conname
+--> [
+  {
+    "conname": "chk_detalle_cantidad_rango",
+    "definicion": "CHECK (((cantidad >= 1) AND (cantidad <= 20)))"
+  },
+  {
+    "conname": "detalle_pedido_cantidad_check",
+    "definicion": "CHECK ((cantidad > 0))"
+  },
+  {
+    "conname": "detalle_pedido_precio_unitario_check",
+    "definicion": "CHECK ((precio_unitario >= (0)::numeric))"
+  }
+]
+
+## Zona horaria: el mismo instante cae en meses distintos
+SELECT current_setting('TimeZone') AS zona,
+        date_trunc('month', timestamptz '2026-02-28 23:30:00-03')::date AS mes
+--> [
+  {
+    "zona": "America/Argentina/Buenos_Aires",
+    "mes": "2026-02-01T03:00:00.000Z"
+  }
+]
+
+## Mismo instante con TimeZone UTC
+SELECT current_setting('TimeZone') AS zona,
+        date_trunc('month', timestamptz '2026-02-28 23:30:00-03')::date AS mes
+--> [
+  {
+    "zona": "UTC",
+    "mes": "2026-03-01T03:00:00.000Z"
+  }
+]

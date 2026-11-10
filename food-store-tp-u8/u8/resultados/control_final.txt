@@ -1,0 +1,22 @@
+[
+  {
+    "metrica": "pedidos",
+    "valor": "5"
+  },
+  {
+    "metrica": "detalle_pedido",
+    "valor": "7"
+  },
+  {
+    "metrica": "stock_total",
+    "valor": "220"
+  },
+  {
+    "metrica": "md5_pedidos",
+    "valor": "10c2d0044f769bd188ebc2ce804dded9"
+  },
+  {
+    "metrica": "md5_detalles",
+    "valor": "2d6cd57a2046238bcd08f46e3f0c8723"
+  }
+]
