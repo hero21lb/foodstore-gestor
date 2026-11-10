@@ -218,3 +218,14 @@ Evidencia: `food-store-tp-u8/u8/resultados/evidencia_u8.txt`,
 4. U6: `food-store-tp-u6/backup_foodstore.ps1` y `restore_test.ps1`.
 5. U7: `food-store-tp-u7/laboratorio_u7.py` y `consultas_mongodb.js`.
 6. U8: `food-store-tp-u8/README.md` y `food-store-tp-u8/u8/run_u8.mjs`.
+
+## 10. Gestor para la defensa
+
+El gestor web del proyecto incorpora una vista **Laboratorio TPI** con una
+tarjeta por unidad (U1 a U8). Cada tarjeta ejecuta una prueba real contra
+PostgreSQL, MongoDB o SQLite y muestra el resultado en pantalla. También incluye
+una vista **Defensa** con el guion de la charla y las preguntas probables.
+
+- URL: https://foodstore-gestor-production.up.railway.app/
+- Repositorio: https://github.com/hero21lb/foodstore-gestor
+- Guion completo: `TPI/GUIA_DEFENSA.md`
